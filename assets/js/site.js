@@ -1,22 +1,23 @@
-// NAV highlight
+// ===== Nav highlight =====
 (function(){
-  const path = location.pathname.split('/').pop() || 'index.html';
+  const page = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
   document.querySelectorAll('nav a').forEach(a=>{
-    if(a.getAttribute('href')===path) a.style.textDecoration='underline';
+    const href = (a.getAttribute('href')||'').toLowerCase();
+    if(href && page === href) a.classList.add('active');
   });
 })();
 
-// Basic fetch + utils
+// ===== Small utilities =====
 async function loadJSON(path){
   const res = await fetch(path);
   if(!res.ok) throw new Error(`Failed to load ${path}`);
   return res.json();
 }
 const fmt = {
-  pct:x=>`${Math.round((x||0)*100)}%`,
-  num:x=>Number(x||0).toLocaleString(),
-  date:s=>s?new Date(s).toLocaleDateString():''
+  num:x=>Number(x||0).toLocaleString()
 };
+
+// Tiny bar chart
 function drawBars(canvasId, labels, values){
   const c = document.getElementById(canvasId);
   if(!c) return;
@@ -43,7 +44,7 @@ function drawBars(canvasId, labels, values){
   });
 }
 
-// Export helpers
+// Exports
 function download(filename, content, mime='text/plain'){
   const blob = new Blob([content], {type: mime});
   const url = URL.createObjectURL(blob);
@@ -61,7 +62,4 @@ function exportJSON(filename, data){ download(filename, JSON.stringify(data, nul
 function exportCSV(filename, rows){ download(filename, toCSV(rows), 'text/csv'); }
 window.__exportUtils = { exportJSON, exportCSV };
 
-// GOVERNANCE scoring helpers expected in JS/ai.js:
-// - scoreSolution(sol) -> { wsjf, governance, dailyImpact }
-// - statusBadge(score) -> { cls:'ok'|'warn'|'crit', label:string }
-// - loadAllData() -> {solutions, risks, cadence, members, phases, phaseActions, playbook, agenda}
+// NOTE: scoreSolution(), statusBadge(), loadAllData() come from JS/ai.js (already in your project)
