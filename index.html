@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Human + AI Strategy | Governance Dashboard</title>
+  <title>Human + AI Strategy | Hub</title>
   <link rel="stylesheet" href="CSS/style.css"/>
   <script defer src="JS/site.js"></script>
   <script defer src="JS/ai.js"></script>
@@ -33,135 +33,297 @@
   </nav>
 
   <div class="container">
-    <section class="hero">
-      <h1>Governance Control Center</h1>
-      <p class="small">Applying AI across the HR stack (recruiting, onboarding, learning, compensation, workforce planning) with responsible, inclusive adoption. Monitor governance health, prioritization, and daily impact.</p>
-      <div class="toolbar">
-        <div class="row">
-          <input id="search" class="input" placeholder="Filter solutions…"/>
-          <select id="sort" class="input">
-            <option value="wsjf">Sort by Priority</option>
-            <option value="governance">Sort by Governance</option>
-            <option value="dailyImpact">Sort by Daily Impact</option>
-          </select>
+    <!-- HERO + QUICK START + KPIs -->
+    <section class="hub-hero">
+      <h1>Human + AI Strategy Hub</h1>
+      <p>Applying AI across the HR stack with responsible, inclusive adoption—governed by policy, ethics, bias, security, and privacy.</p>
+      <div class="quick-start" style="margin-top:12px">
+        <a href="leadership.html">Leadership One-Pager</a>
+        <a href="governance.html">Governance Council</a>
+        <a href="solutions.html">Solutions Catalog</a>
+        <a href="playbook.html">Guardrails Playbook</a>
+      </div>
+      <div class="kpi-band" id="kpiBand"></div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="timeline">
+      <h2>Execution Timeline</h2>
+      <div class="tl-rail" id="tlRail" role="tablist" aria-label="Phases 1 to 6"></div>
+      <div class="tl-panel" id="tlPanel" role="tabpanel" aria-live="polite"></div>
+    </section>
+
+    <!-- TWO-COLUMN: SVG map + Solutions / Impact -->
+    <section class="two-col">
+      <div class="svgwrap card">
+        <h3 style="margin:6px 8px 10px 8px;">Interactive Governance Map</h3>
+        <svg viewBox="0 0 1200 820" role="group" aria-label="Governance Map">
+          <!-- Headings -->
+          <text x="70" y="60" class="svg-label">Strategy</text>
+          <text x="370" y="60" class="svg-label">Standards</text>
+          <text x="680" y="60" class="svg-label">Implementation</text>
+          <text x="1010" y="60" class="svg-label">Operations</text>
+
+          <!-- Strategy -->
+          <a xlink:href="leadership.html" tabindex="0" aria-label="C-Suite">
+            <rect class="btn-rect" x="40" y="80" width="240" height="80" rx="12" fill="#6f5bff"/>
+            <text x="60" y="110" class="svg-label">C-Suite</text>
+            <text x="60" y="130" class="svg-sub">Vision • Goals • Risk Appetite</text>
+          </a>
+          <a xlink:href="leadership.html#end-goal" tabindex="0" aria-label="End Goal">
+            <rect class="btn-rect" x="40" y="170" width="240" height="60" rx="12" fill="#7f6dff"/>
+            <text x="60" y="205" class="svg-label">End Goal</text>
+          </a>
+
+          <!-- Standards -->
+          <a xlink:href="playbook.html" tabindex="0" aria-label="COE">
+            <rect class="btn-rect" x="340" y="80" width="240" height="80" rx="12" fill="#5a42e0"/>
+            <text x="360" y="110" class="svg-label">Center of Excellence (COE)</text>
+            <text x="360" y="130" class="svg-sub">Standards • Frameworks • Best Practices</text>
+          </a>
+          <a xlink:href="playbook.html" tabindex="0" aria-label="Standards">
+            <rect class="btn-rect" x="340" y="170" width="115" height="60" rx="12" fill="#6b52ff"/>
+            <text x="355" y="205" class="svg-label">Standards</text>
+          </a>
+          <a xlink:href="playbook.html" tabindex="0" aria-label="Roadmaps">
+            <rect class="btn-rect" x="465" y="170" width="115" height="60" rx="12" fill="#6b52ff"/>
+            <text x="480" y="205" class="svg-label">Roadmaps</text>
+          </a>
+
+          <!-- Implementation -->
+          <a xlink:href="solutions.html" tabindex="0" aria-label="Business Unit">
+            <rect class="btn-rect" x="650" y="80" width="240" height="80" rx="12" fill="#4b2cd4"/>
+            <text x="670" y="110" class="svg-label">Business Unit</text>
+            <text x="670" y="130" class="svg-sub">Implements strategies • Guardrails</text>
+          </a>
+          <a xlink:href="solutions.html" tabindex="0" aria-label="Data Strategies">
+            <rect class="btn-rect" x="650" y="170" width="115" height="60" rx="12" fill="#5a42e0"/>
+            <text x="665" y="205" class="svg-label">Data Strategies</text>
+          </a>
+          <a xlink:href="playbook.html" tabindex="0" aria-label="Responsible AI">
+            <rect class="btn-rect" x="775" y="170" width="115" height="60" rx="12" fill="#5a42e0"/>
+            <text x="785" y="205" class="svg-label">Responsible AI</text>
+          </a>
+          <a xlink:href="solutions.html" tabindex="0" aria-label="Trusted data">
+            <rect class="btn-rect" x="650" y="240" width="115" height="60" rx="12" fill="#5a42e0"/>
+            <text x="665" y="275" class="svg-label">Trusted data</text>
+          </a>
+          <a xlink:href="solutions.html" tabindex="0" aria-label="Protected data">
+            <rect class="btn-rect" x="775" y="240" width="115" height="60" rx="12" fill="#5a42e0"/>
+            <text x="785" y="275" class="svg-label">Protected data</text>
+          </a>
+
+          <!-- Operations -->
+          <a xlink:href="day.html" tabindex="0" aria-label="Operations BAU">
+            <rect class="btn-rect" x="960" y="80" width="200" height="120" rx="12" fill="#2c355a"/>
+            <text x="980" y="120" class="svg-label">Operations</text>
+            <text x="980" y="140" class="svg-sub">Run / BAU</text>
+          </a>
+
+          <!-- Council band -->
+          <rect x="40" y="340" width="1120" height="120" rx="16" fill="#0e2a6f"/>
+          <text x="60" y="372" class="svg-label" style="font-size:16px">Governance Council</text>
+          <text x="60" y="395" class="svg-sub">Legal • Compliance • Security • Risk • IT</text>
+          <text x="60" y="415" class="svg-sub">Alignment • Conflict resolution • Monitoring</text>
+
+          <a xlink:href="playbook.html" tabindex="0" aria-label="Policy & Standards">
+            <rect class="btn-rect" x="60" y="448" width="210" height="70" rx="12" fill="#193b94"/>
+            <text x="75" y="480" class="svg-label">Policy & Standards</text>
+          </a>
+          <a xlink:href="playbook.html" tabindex="0" aria-label="Model Ethics & Fairness">
+            <rect class="btn-rect" x="290" y="448" width="210" height="70" rx="12" fill="#193b94"/>
+            <text x="305" y="480" class="svg-label">Model Ethics & Fairness</text>
+          </a>
+          <a xlink:href="governance.html" tabindex="0" aria-label="Execution Oversight">
+            <rect class="btn-rect" x="520" y="448" width="210" height="70" rx="12" fill="#193b94"/>
+            <text x="535" y="480" class="svg-label">Execution Oversight</text>
+          </a>
+          <a xlink:href="governance.html" tabindex="0" aria-label="Escalations & Risk Decisions">
+            <rect class="btn-rect" x="750" y="448" width="210" height="70" rx="12" fill="#193b94"/>
+            <text x="765" y="480" class="svg-label">Escalations & Risk Decisions</text>
+          </a>
+          <a xlink:href="pulse.html" tabindex="0" aria-label="Data Hygiene & Quality">
+            <rect class="btn-rect" x="980" y="448" width="160" height="70" rx="12" fill="#193b94"/>
+            <text x="995" y="480" class="svg-label">Data Hygiene & Quality</text>
+          </a>
+
+          <!-- Guardrails band -->
+          <a xlink:href="playbook.html" tabindex="0" aria-label="Responsible AI Guardrails">
+            <rect class="btn-rect" x="40" y="540" width="1120" height="110" rx="16" fill="#2a2f3d"/>
+            <text x="60" y="585" class="svg-label">Responsible AI Guardrails (AI Governance Layer)</text>
+            <text x="60" y="607" class="svg-sub">Ethics • Explainability • Security • PII • Compliance</text>
+          </a>
+
+          <!-- Trusted data band -->
+          <a xlink:href="solutions.html" tabindex="0" aria-label="Trusted Data Foundations">
+            <rect class="btn-rect" x="40" y="660" width="1120" height="120" rx="16" fill="#2c5be6"/>
+            <text x="60" y="705" class="svg-label">Trusted Data Foundations (Data Governance Layer)</text>
+            <text x="60" y="727" class="svg-sub">Quality • Lineage • Metadata • Retention • Legal Holds</text>
+          </a>
+        </svg>
+
+        <div class="legend" style="margin-top:10px">
+          <div class="chip"><span class="swatch" style="background:#6f5bff"></span> Strategy</div>
+          <div class="chip"><span class="swatch" style="background:#5a42e0"></span> Standards</div>
+          <div class="chip"><span class="swatch" style="background:#4b2cd4"></span> Implementation</div>
+          <div class="chip"><span class="swatch" style="background:#2c355a"></span> Operations</div>
+          <div class="chip"><span class="swatch" style="background:#0e2a6f"></span> Governance Council</div>
+          <div class="chip"><span class="swatch" style="background:#2a2f3d"></span> AI Guardrails</div>
+          <div class="chip"><span class="swatch" style="background:#2c5be6"></span> Data Foundations</div>
         </div>
-        <div class="row">
-          <button class="button" id="refreshBtn">Refresh</button>
-          <button class="button ghost" id="expJSON">Export JSON</button>
-          <button class="button ghost" id="expCSV">Export CSV</button>
-          <a class="button" href="leadership.html">One-Pager</a>
+      </div>
+
+      <div>
+        <div class="card">
+          <h3>Top 5 Solutions (Governance)</h3>
+          <div id="solnGrid" class="soln-grid"></div>
+        </div>
+        <div class="card" style="margin-top:12px">
+          <h3>Top 3 Daily Impact</h3>
+          <table class="table" id="topDailyTable"></table>
+          <canvas id="impactChart"></canvas>
+          <div class="row" style="display:flex;gap:10px;margin-top:8px">
+            <button class="button ghost" id="expJSON">Export JSON</button>
+            <button class="button ghost" id="expCSV">Export CSV</button>
+            <a class="button" href="leadership.html">One-Pager</a>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="grid cols-3" id="kpiRow"></section>
-
-    <section class="grid cols-2" style="margin-top:14px">
-      <div class="card" id="topFive">
-        <h3>Top 5 Solutions (Governance View)</h3>
-        <table class="table" id="topFiveTable"></table>
+    <!-- CADENCE -->
+    <section style="margin-top:16px">
+      <h2>Day • Week • Month Cadence</h2>
+      <div class="tabs">
+        <button class="tab active" data-tab="day">Day</button>
+        <button class="tab" data-tab="week">Week</button>
+        <button class="tab" data-tab="month">Month</button>
+        <a class="button ghost" href="day.html" style="margin-left:auto">Open full schedule</a>
       </div>
-      <div class="card">
-        <h3>Top 3 Daily Impact (Today)</h3>
-        <table class="table" id="topDailyTable"></table>
-        <canvas id="impactChart"></canvas>
-      </div>
-    </section>
-
-    <section class="grid cols-3" style="margin-top:14px">
-      <div class="card"><h3>Policy</h3><div class="small" id="policyNote"></div></div>
-      <div class="card"><h3>Ethics</h3><div class="small" id="ethicsNote"></div></div>
-      <div class="card"><h3>Bias</h3><div class="small" id="biasNote"></div></div>
-    </section>
-
-    <section class="grid cols-2" style="margin-top:14px">
-      <div class="card"><h3>Security</h3><div class="small" id="securityNote"></div></div>
-      <div class="card"><h3>Privacy</h3><div class="small" id="privacyNote"></div></div>
+      <div id="tpDay"   class="tabpanel"></div>
+      <div id="tpWeek"  class="tabpanel" style="display:none"></div>
+      <div id="tpMonth" class="tabpanel" style="display:none"></div>
     </section>
 
     <div class="footer">© You — Human + AI Strategist • Portfolio Demo</div>
   </div>
 
   <script>
-  (async function init(){
-    const state = await loadAllData();
-    const enriched = state.solutions.map(s=>({ ...s, scores: scoreSolution(s), summary: summarizeSolution(s, scoreSolution(s)) }));
+  // ===== KPIs =====
+  (async function renderKPIs(){
+    const {solutions, risks} = await loadAllData();
+    const scored = solutions.map(s=>({ ...s, scores: scoreSolution(s) }));
+    const avgGov = Math.round(scored.reduce((a,c)=>a+c.scores.governance,0)/Math.max(1,scored.length));
+    const avgPriority = Math.round(scored.reduce((a,c)=>a+c.scores.wsjf,0)/Math.max(1,scored.length));
+    const openRisks = risks.filter(r=>r.status!=='Closed').length;
 
-    // KPIs
-    const kpiRow = document.getElementById('kpiRow');
-    const avgGov = Math.round(enriched.reduce((a,c)=>a+c.scores.governance,0)/Math.max(1,enriched.length));
-    const avgPriority = Math.round(enriched.reduce((a,c)=>a+c.scores.wsjf,0)/Math.max(1,enriched.length));
-    const openRisks = state.risks.filter(r=>r.status!=='Closed').length;
-    kpiRow.innerHTML = `
-      <div class="card"><div class="kpi"><span class="val">${avgGov}</span><span>Avg Governance</span></div><div class="small">Policy • Ethics • Bias • Security • Privacy</div></div>
-      <div class="card"><div class="kpi"><span class="val">${avgPriority}</span><span>Avg Priority</span></div><div class="small">WSJF scoring</div></div>
-      <div class="card"><div class="kpi"><span class="val">${openRisks}</span><span>Open Risks</span></div><div class="small">Tracked in risk register</div></div>
+    document.getElementById('kpiBand').innerHTML = `
+      <div class="kpi-card"><div class="kpi"><span class="val">${avgGov}</span><span>Avg Governance</span></div><div class="label">Policy • Ethics • Bias • Security • Privacy</div></div>
+      <div class="kpi-card"><div class="kpi"><span class="val">${avgPriority}</span><span>Avg Priority</span></div><div class="label">WSJF-style scoring</div></div>
+      <div class="kpi-card"><div class="kpi"><span class="val">${openRisks}</span><span>Open Risks</span></div><div class="label">Risk register</div></div>
     `;
+  })();
 
-    // Filters + render
-    let view = enriched;
-    const search = document.getElementById('search');
-    const sortSel = document.getElementById('sort');
-    function apply(){
-      const q = (search.value||'').toLowerCase();
-      let list = enriched.filter(s=>s.name.toLowerCase().includes(q) || (s.category||'').toLowerCase().includes(q));
-      const key = sortSel.value;
-      list = list.sort((a,b)=>b.scores[key]-a.scores[key]);
-      renderTopFive(list.slice(0,5));
-      const topDaily = list.sort((a,b)=>b.scores.dailyImpact - a.scores.dailyImpact).slice(0,3);
-      renderTopDaily(topDaily);
-      drawBars('impactChart', topDaily.map(x=>x.short||x.name), topDaily.map(x=>x.scores.dailyImpact));
-      view = list;
-    }
-    search.addEventListener('input', apply);
-    sortSel.addEventListener('change', apply);
-    document.getElementById('refreshBtn').addEventListener('click', apply);
+  // ===== Timeline =====
+  (async function initTimeline(){
+    const {phases, phaseActions} = await loadAllData();
+    const rail = document.getElementById('tlRail');
+    const panel = document.getElementById('tlPanel');
 
-    function renderTopFive(list){
-      const el = document.getElementById('topFiveTable');
-      el.innerHTML = `
-        <tr><th>Solution</th><th>Priority</th><th>Gov</th><th>Status</th><th>Notes</th></tr>
-        ${list.map(s=>{
-          const b = statusBadge(s.scores.governance);
-          return `<tr>
-            <td><strong>${s.name}</strong><div class="small">${s.category||'—'}</div></td>
-            <td>${s.scores.wsjf}</td>
-            <td><span class="badge ${b.cls}">${s.scores.governance} ${b.label}</span></td>
-            <td>${s.status||'—'}</td>
-            <td class="small">${s.summary}</td>
-          </tr>`;
-        }).join('')}
+    function renderPanel(id){
+      const p = phases.find(x=>x.id===id);
+      const acts = phaseActions.filter(a=>a.phase===id);
+      panel.innerHTML = `
+        <h3>${p.title}</h3>
+        <p class="small">${p.description}</p>
+        <table class="table">
+          <tr><th>Deliverable</th><th>Owner</th><th>Acceptance</th></tr>
+          ${acts.map(a=>`<tr><td>${a.deliverable}</td><td>${a.owner}</td><td class="small">${a.acceptance}</td></tr>`).join('')}
+        </table>
+        <div class="row" style="margin-top:8px">
+          <a class="button ghost" href="day.html">View Day/Week/Month cadence</a>
+          <a class="button ghost" href="playbook.html">See guardrails</a>
+        </div>
       `;
     }
-    function renderTopDaily(list){
-      const el = document.getElementById('topDailyTable');
-      el.innerHTML = `
-        <tr><th>Solution</th><th>Daily Impact</th><th>Usage</th><th>Impact</th></tr>
-        ${list.map(s=>`<tr><td><strong>${s.short||s.name}</strong></td><td>${s.scores.dailyImpact}</td><td>${fmt.num(s.dailyUsage||0)}</td><td>${s.impact||0}</td></tr>`).join('')}
-      `;
-    }
-    // Initial render
-    apply();
 
-    // Exports
+    rail.innerHTML = phases
+      .sort((a,b)=>a.id-b.id)
+      .map(p=>`<button class="tl-node" role="tab" aria-controls="tlPanel" data-id="${p.id}">
+        <strong>Phase ${p.id}</strong><small>${p.title.replace(/^[^-–—]+[–—-]\s*/,'')}</small>
+      </button>`).join('');
+
+    function setActive(id){
+      rail.querySelectorAll('.tl-node').forEach(b=>b.classList.toggle('active', Number(b.dataset.id)===id));
+      renderPanel(id);
+    }
+    rail.addEventListener('click', e=>{
+      const btn = e.target.closest('.tl-node'); if(!btn) return;
+      setActive(Number(btn.dataset.id));
+    });
+
+    // deep link support: index.html#phase=3
+    const hash = new URL(location.href).hash;
+    const m = hash.match(/phase=(\d)/);
+    setActive(m ? Number(m[1]) : 1);
+  })();
+
+  // ===== Solutions + Impact + Exports =====
+  (async function renderSolutions(){
+    const {solutions, risks} = await loadAllData();
+    const enriched = solutions.map(s=>({ ...s, scores: scoreSolution(s) }));
+
+    const top5 = [...enriched].sort((a,b)=>b.scores.governance - a.scores.governance).slice(0,5);
+    document.getElementById('solnGrid').innerHTML = top5.map(s=>{
+      const b = statusBadge(s.scores.governance);
+      const k = Object.entries(s.kpis||{}).slice(0,2).map(([k,v])=>`<span class="badge">${k}: ${v}</span>`).join(' ');
+      return `<div class="soln-card">
+        <h4>${s.name}</h4>
+        <div class="small">${s.category||'—'}</div>
+        <div class="row" style="margin:8px 0">
+          <span class="badge ${b.cls}">${s.scores.governance} ${b.label}</span>
+          <span class="badge">${s.scores.wsjf} Priority</span>
+        </div>
+        <div class="small">${k || '—'}</div>
+      </div>`;
+    }).join('');
+
+    const topDaily = [...enriched].sort((a,b)=>b.scores.dailyImpact - a.scores.dailyImpact).slice(0,3);
+    document.getElementById('topDailyTable').innerHTML = `
+      <tr><th>Solution</th><th>Daily Impact</th><th>Usage</th><th>Impact</th></tr>
+      ${topDaily.map(s=>`<tr><td><strong>${s.short||s.name}</strong></td><td>${s.scores.dailyImpact}</td><td>${fmt.num(s.dailyUsage||0)}</td><td>${s.impact||0}</td></tr>`).join('')}
+    `;
+    drawBars('impactChart', topDaily.map(x=>x.short||x.name), topDaily.map(x=>x.scores.dailyImpact));
+
     document.getElementById('expJSON').onclick = ()=>{
-      const snapshot = view.map(v=>({
-        name:v.name, category:v.category, status:v.status,
-        priority:v.scores.wsjf, governance:v.scores.governance,
-        dailyImpact:v.scores.dailyImpact, lastUpdated:v.lastUpdated
-      }));
-      __exportUtils.exportJSON('governance_snapshot.json', { snapshot, risks: state.risks });
+      const snapshot = enriched.map(v=>({name:v.name,category:v.category,status:v.status,priority:v.scores.wsjf,governance:v.scores.governance,dailyImpact:v.scores.dailyImpact,lastUpdated:v.lastUpdated}));
+      __exportUtils.exportJSON('hub_snapshot.json', { snapshot, risks });
     };
     document.getElementById('expCSV').onclick = ()=>{
-      const rows = view.map(v=>({
-        name:v.name, category:v.category, status:v.status,
-        priority:v.scores.wsjf, governance:v.scores.governance,
-        dailyImpact:v.scores.dailyImpact, dailyUsage:v.dailyUsage||0, impact:v.impact||0, lastUpdated:v.lastUpdated||''
-      }));
-      __exportUtils.exportCSV('governance_snapshot.csv', rows);
+      const rows = enriched.map(v=>({name:v.name,category:v.category,status:v.status,priority:v.scores.wsjf,governance:v.scores.governance,dailyImpact:v.scores.dailyImpact,dailyUsage:v.dailyUsage||0,impact:v.impact||0,lastUpdated:v.lastUpdated||''}));
+      __exportUtils.exportCSV('hub_snapshot.csv', rows);
     };
+  })();
+
+  // ===== Cadence Tabs =====
+  (async function cadenceTabs(){
+    const {cadence} = await loadAllData();
+    const renderList = (items)=>`<ul class="clean">${(items||[]).map(x=>`<li>${x}</li>`).join('')}</ul>`;
+    document.getElementById('tpDay').innerHTML   = renderList(cadence.daily);
+    document.getElementById('tpWeek').innerHTML  = renderList(cadence.weekly);
+    document.getElementById('tpMonth').innerHTML = renderList(cadence.monthly);
+
+    document.querySelectorAll('.tab').forEach(t=>{
+      t.addEventListener('click',()=>{
+        document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+        t.classList.add('active');
+        const id = t.dataset.tab;
+        document.getElementById('tpDay').style.display   = id==='day'?'block':'none';
+        document.getElementById('tpWeek').style.display  = id==='week'?'block':'none';
+        document.getElementById('tpMonth').style.display = id==='month'?'block':'none';
+      });
+    });
   })();
   </script>
 </body>
 </html>
-
