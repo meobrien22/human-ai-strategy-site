@@ -1,4 +1,4 @@
-/* ============== Design Tokens ============== */
+/* ================= Design Tokens (Nav + Hero only) ================= */
 :root{
   --bg:#0a0f1e;
   --surface:#0f162b;
@@ -6,62 +6,47 @@
   --ink:#e9eefc;
   --muted:#98a9cf;
   --accent:#73b0ff;
-  --accent-2:#9ed0ff;
-  --ok:#37d67a; --warn:#f5a623; --crit:#ff4d4f;
-
-  --purple:#6f5bff;
-  --standard:#5a42e0;
-  --impl:#4b2cd4;
-  --ops:#2c355a;
-  --council:#0e2a6f;
-  --guard:#2a2f3d;
-  --data:#2c5be6;
-
   --radius:16px;
   --shadow:0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.02);
 }
 
-/* ============== Base ============== */
+/* ================= Base ================= */
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
 a{color:var(--accent);text-decoration:none}
 a:hover{opacity:.95}
 .container{max-width:1200px;margin:0 auto;padding:24px}
 
-/* ============== Modern Nav ============== */
+/* ================= Modern Navigation ================= */
 nav{
   position:sticky; top:0; z-index:50;
   background:rgba(10,15,30,.85);
   backdrop-filter:blur(10px);
   border-bottom:1px solid rgba(255,255,255,.06);
 }
-nav .inner{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:10px 24px;}
+nav .inner{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:16px; padding:10px 24px;
+}
 .brand{display:flex; align-items:center; gap:10px; font-weight:800}
 .brand img{width:28px;height:28px;border-radius:8px}
 .navlinks{display:flex; gap:8px; flex-wrap:wrap}
 .navlinks a{
   padding:8px 12px; border-radius:10px;
-  color:#cfe1ff; border:1px solid transparent;
+  color:#cfe1ff; border:1px solid transparent; transition:all .15s ease;
 }
 .navlinks a:hover{background:#0f172e; border-color:rgba(255,255,255,.08)}
-.navlinks a.active{background:#112144; border-color:rgba(255,255,255,.12)}
+.navlinks a.active{background:#112144; border-color:rgba(255,255,255,.12); color:#e8f1ff}
 
-/* ============== Buttons / Inputs ============== */
-.button{background:var(--accent);color:#071228;border:none;padding:10px 14px;border-radius:12px;font-weight:700;cursor:pointer;box-shadow:var(--shadow)}
+/* ================= Buttons (for hero CTAs) ================= */
+.button{
+  background:var(--accent); color:#071228; border:none;
+  padding:10px 14px; border-radius:12px; font-weight:700;
+  cursor:pointer; box-shadow:var(--shadow)
+}
 .button.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
-.input{background:#0f172e;border:1px solid rgba(255,255,255,.1);color:var(--ink);padding:10px 12px;border-radius:10px}
 
-/* ============== Cards & Grids ============== */
-.card{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
-.grid{display:grid;gap:16px}
-.grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
-.grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
-@media (max-width:1000px){ .grid.cols-3,.grid.cols-2{grid-template-columns:1fr} }
-.table{width:100%;border-collapse:collapse}
-.table th,.table td{padding:10px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top}
-.small{color:var(--muted);font-size:.95rem}
-
-/* ============== Hero ============== */
+/* ================= Hero ================= */
 .hero{
   position:relative; overflow:hidden; border-radius:22px; padding:28px;
   background:
@@ -71,72 +56,13 @@ nav .inner{display:flex; align-items:center; justify-content:space-between; gap:
   border:1px solid rgba(255,255,255,.08);
   box-shadow:var(--shadow);
 }
-.hero h1{margin:0 0 6px 0; font-size:2.2rem}
-.hero p{margin:0; color:var(--muted)}
+.hero h1{margin:0 0 6px 0; font-size:2.3rem}
+.hero p{margin:0; color:var(--muted); max-width:820px}
+.hero-cta{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
 .hero-art{
-  position:absolute; right:-60px; bottom:-60px; width:480px; opacity:.35; pointer-events:none;
+  position:absolute; right:-60px; bottom:-60px; width:520px; opacity:.32; pointer-events:none;
   filter:drop-shadow(0 10px 20px rgba(0,0,0,.25));
 }
-.quickstart{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:14px}
-.quickstart a{display:flex;align-items:center;justify-content:center;background:#0f172e;border:1px solid rgba(255,255,255,.08);padding:12px;border-radius:12px;min-height:56px}
-.quickstart a:hover{transform:translateY(-1px);transition:.2s ease}
 
-/* KPI band */
-.kpi-band{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}
-.kpi-card{background:var(--surface);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px}
-.kpi{display:flex;align-items:center;gap:8px}
-.kpi .val{font-size:1.6rem;font-weight:800}
-
-/* ============== 30 / 60 / 90 Timeline ============== */
-.timeline{margin-top:22px}
-.tl-scroll{
-  display:flex; gap:14px; overflow-x:auto; padding-bottom:6px; scroll-snap-type:x mandatory;
-}
-.tl-card{
-  min-width:220px; max-width:220px; scroll-snap-align:start;
-  background:linear-gradient(180deg,#101a39,#0f172e); border:1px solid rgba(255,255,255,.08);
-  border-radius:14px; padding:12px; cursor:pointer; transition:transform .15s ease, border-color .15s ease;
-}
-.tl-card:hover{transform:translateY(-2px); border-color:rgba(255,255,255,.18)}
-.tl-card.active{outline:2px solid var(--accent)}
-.tl-badge{display:inline-block; padding:2px 8px; border-radius:999px; font-size:.8rem; margin-bottom:6px; color:#061022; background:var(--accent)}
-.tl-phase{font-weight:800;margin:0}
-.tl-sub{color:var(--muted); font-size:.9rem;margin:4px 0 0}
-.tl-panel{margin-top:12px}
-.tl-panel .card{padding:14px}
-
-/* ============== Two-Column Zone ============== */
-.two-col{display:grid;grid-template-columns:1.2fr .8fr;gap:16px;margin-top:18px}
-@media (max-width:1100px){ .two-col{grid-template-columns:1fr} }
-
-/* ============== Interactive SVG Map ============== */
-.svgwrap{background:linear-gradient(180deg,#0d1831,#0a1226);border:1px solid rgba(255,255,255,.06);border-radius:18px;box-shadow:var(--shadow);padding:10px}
-svg{width:100%;height:auto;display:block}
-.btn-rect{cursor:pointer; transition:filter .15s ease, transform .05s ease; outline:none}
-.btn-rect:hover{filter:brightness(1.07)}
-.btn-rect:active{transform:translateY(1px)}
-.btn-rect:focus{stroke:#ffffff;stroke-width:2}
-.svg-label{font:600 12px/1.3 Inter,ui-sans-serif,system-ui;fill:#eef3ff}
-.svg-sub{font:500 11px/1.3 Inter,ui-sans-serif,system-ui;fill:#c6d5ff}
-.legend{display:flex;gap:10px;flex-wrap:wrap}
-.legend .chip{display:flex;gap:8px;align-items:center;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.08);background:#0f172e}
-.legend .swatch{width:12px;height:12px;border-radius:3px}
-
-/* ============== Solutions & Impact ============== */
-.soln-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.soln-card{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:12px}
-.soln-card h4{margin:.1rem 0 .3rem}
-.badge{padding:4px 10px;border-radius:999px;font-size:.78rem;font-weight:700;border:1px solid rgba(255,255,255,.1)}
-.badge.ok{background:rgba(55,214,122,.12);color:var(--ok);border-color:rgba(55,214,122,.35)}
-.badge.warn{background:rgba(245,166,35,.12);color:var(--warn);border-color:rgba(245,166,35,.35)}
-.badge.crit{background:rgba(255,77,79,.12);color:var(--crit);border-color:rgba(255,77,79,.35)}
-canvas{width:100%;height:180px;border-radius:10px;background:#0f172e;border:1px solid rgba(255,255,255,.06)}
-
-/* ============== Cadence Tabs ============== */
-.tabs{display:flex;gap:8px;margin:10px 0}
-.tab{padding:6px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.12);cursor:pointer}
-.tab.active{background:#0f172e;border-color:rgba(255,255,255,.25)}
-.tabpanel{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px}
-
-/* ============== Footer ============== */
-.footer{color:var(--muted);text-align:center;padding:24px;margin-top:24px;border-top:1px solid rgba(255,255,255,.06)}
+/* ================= Helpers ================= */
+.hidden{display:none}
