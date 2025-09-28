@@ -1,0 +1,6 @@
+[
+  {"id":"R-001","title":"Model drift in Talent Search","severity":"High","likelihood":"Med","mitigation":"Retrain/monitor; guardrail tests","owner":"AI Ops","status":"Open"},
+  {"id":"R-002","title":"PHI/PII in prompts","severity":"Med","likelihood":"Med","mitigation":"PII redaction, retention policy","owner":"Privacy","status":"Open"},
+  {"id":"R-003","title":"Latency spikes in Copilot","severity":"Med","likelihood":"Low","mitigation":"Autoscale + caching","owner":"Platform","status":"Mitigating"},
+  {"id":"R-004","title":"Adverse impact variance > 4%","severity":"High","likelihood":"Low","mitigation":"Bias test suite + HITL","owner":"Responsible AI","status":"Open"}
+]

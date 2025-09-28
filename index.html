@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Human + AI Strategy | Governance Dashboard</title>
+  <link rel="stylesheet" href="CSS/style.css"/>
+  <script defer src="JS/site.js"></script>
+  <script defer src="JS/ai.js"></script>
+</head>
+<body>
+  <nav>
+    <div class="inner">
+      <div class="brand">
+        <img src="img/icon.png" alt="icon"/>
+        <span>Human + AI Strategy</span>
+      </div>
+      <div class="navlinks">
+        <a href="index.html">Home</a>
+        <a href="solutions.html">Solutions</a>
+        <a href="governance.html">Governance</a>
+        <a href="comms.html">Comms</a>
+        <a href="pulse.html">Pulse</a>
+        <a href="day.html">Day-in-the-Life</a>
+        <a href="about.html">About</a>
+        <a href="playbook.html">Playbook</a>
+        <a href="star.html">STAR</a>
+        <a href="leadership.html">Leadership</a>
+        <a href="https://github.com/meobrien22/human-ai-strategy-site" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/meobrien22/human-ai-strategy-site#readme" target="_blank" rel="noopener">View README</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <section class="hero">
+      <h1>Governance Control Center</h1>
+      <p class="small">Applying AI across the HR stack (recruiting, onboarding, learning, compensation, workforce planning) with responsible, inclusive adoption. Monitor governance health, prioritization, and daily impact.</p>
+      <div class="toolbar">
+        <div class="row">
+          <input id="search" class="input" placeholder="Filter solutions…"/>
+          <select id="sort" class="input">
+            <option value="wsjf">Sort by Priority</option>
+            <option value="governance">Sort by Governance</option>
+            <option value="dailyImpact">Sort by Daily Impact</option>
+          </select>
+        </div>
+        <div class="row">
+          <button class="button" id="refreshBtn">Refresh</button>
+          <button class="button ghost" id="expJSON">Export JSON</button>
+          <button class="button ghost" id="expCSV">Export CSV</button>
+          <a class="button" href="leadership.html">One-Pager</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid cols-3" id="kpiRow"></section>
+
+    <section class="grid cols-2" style="margin-top:14px">
+      <div class="card" id="topFive">
+        <h3>Top 5 Solutions (Governance View)</h3>
+        <table class="table" id="topFiveTable"></table>
+      </div>
+      <div class="card">
+        <h3>Top 3 Daily Impact (Today)</h3>
+        <table class="table" id="topDailyTable"></table>
+        <canvas id="impactChart"></canvas>
+      </div>
+    </section>
+
+    <section class="grid cols-3" style="margin-top:14px">
+      <div class="card"><h3>Policy</h3><div class="small" id="policyNote"></div></div>
+      <div class="card"><h3>Ethics</h3><div class="small" id="ethicsNote"></div></div>
+      <div class="card"><h3>Bias</h3><div class="small" id="biasNote"></div></div>
+    </section>
+
+    <section class="grid cols-2" style="margin-top:14px">
+      <div class="card"><h3>Security</h3><div class="small" id="securityNote"></div></div>
+      <div class="card"><h3>Privacy</h3><div class="small" id="privacyNote"></div></div>
+    </section>
+
+    <div class="footer">© You — Human + AI Strategist • Portfolio Demo</div>
+  </div>
+
+  <script>
+  (async function init(){
+    const state = await loadAllData();
+    const enriched = state.solutions.map(s=>({ ...s, scores: scoreSolution(s), summary: summarizeSolution(s, scoreSolution(s)) }));
+
+    // KPIs
+    const kpiRow = document.getElementById('kpiRow');
+    const avgGov = Math.round(enriched.reduce((a,c)=>a+c.scores.governance,0)/Math.max(1,enriched.length));
+    const avgPriority = Math.round(enriched.reduce((a,c)=>a+c.scores.wsjf,0)/Math.max(1,enriched.length));
+    const openRisks = state.risks.filter(r=>r.status!=='Closed').length;
+    kpiRow.innerHTML = `
+      <div class="card"><div class="kpi"><span class="val">${avgGov}</span><span>Avg Governance</span></div><div class="small">Policy • Ethics • Bias • Security • Privacy</div></div>
+      <div class="card"><div class="kpi"><span class="val">${avgPriority}</span><span>Avg Priority</span></div><div class="small">WSJF scoring</div></div>
+      <div class="card"><div class="kpi"><span class="val">${openRisks}</span><span>Open Risks</span></div><div class="small">Tracked in risk register</div></div>
+    `;
+
+    // Filters + render
+    let view = enriched;
+    const search = document.getElementById('search');
+    const sortSel = document.getElementById('sort');
+    function apply(){
+      const q = (search.value||'').toLowerCase();
+      let list = enriched.filter(s=>s.name.toLowerCase().includes(q) || (s.category||'').toLowerCase().includes(q));
+      const key = sortSel.value;
+      list = list.sort((a,b)=>b.scores[key]-a.scores[key]);
+      renderTopFive(list.slice(0,5));
+      const topDaily = list.sort((a,b)=>b.scores.dailyImpact - a.scores.dailyImpact).slice(0,3);
+      renderTopDaily(topDaily);
+      drawBars('impactChart', topDaily.map(x=>x.short||x.name), topDaily.map(x=>x.scores.dailyImpact));
+      view = list;
+    }
+    search.addEventListener('input', apply);
+    sortSel.addEventListener('change', apply);
+    document.getElementById('refreshBtn').addEventListener('click', apply);
+
+    function renderTopFive(list){
+      const el = document.getElementById('topFiveTable');
+      el.innerHTML = `
+        <tr><th>Solution</th><th>Priority</th><th>Gov</th><th>Status</th><th>Notes</th></tr>
+        ${list.map(s=>{
+          const b = statusBadge(s.scores.governance);
+          return `<tr>
+            <td><strong>${s.name}</strong><div class="small">${s.category||'—'}</div></td>
+            <td>${s.scores.wsjf}</td>
+            <td><span class="badge ${b.cls}">${s.scores.governance} ${b.label}</span></td>
+            <td>${s.status||'—'}</td>
+            <td class="small">${s.summary}</td>
+          </tr>`;
+        }).join('')}
+      `;
+    }
+    function renderTopDaily(list){
+      const el = document.getElementById('topDailyTable');
+      el.innerHTML = `
+        <tr><th>Solution</th><th>Daily Impact</th><th>Usage</th><th>Impact</th></tr>
+        ${list.map(s=>`<tr><td><strong>${s.short||s.name}</strong></td><td>${s.scores.dailyImpact}</td><td>${fmt.num(s.dailyUsage||0)}</td><td>${s.impact||0}</td></tr>`).join('')}
+      `;
+    }
+    // Initial render
+    apply();
+
+    // Exports
+    document.getElementById('expJSON').onclick = ()=>{
+      const snapshot = view.map(v=>({
+        name:v.name, category:v.category, status:v.status,
+        priority:v.scores.wsjf, governance:v.scores.governance,
+        dailyImpact:v.scores.dailyImpact, lastUpdated:v.lastUpdated
+      }));
+      __exportUtils.exportJSON('governance_snapshot.json', { snapshot, risks: state.risks });
+    };
+    document.getElementById('expCSV').onclick = ()=>{
+      const rows = view.map(v=>({
+        name:v.name, category:v.category, status:v.status,
+        priority:v.scores.wsjf, governance:v.scores.governance,
+        dailyImpact:v.scores.dailyImpact, dailyUsage:v.dailyUsage||0, impact:v.impact||0, lastUpdated:v.lastUpdated||''
+      }));
+      __exportUtils.exportCSV('governance_snapshot.csv', rows);
+    };
+  })();
+  </script>
+</body>
+</html>

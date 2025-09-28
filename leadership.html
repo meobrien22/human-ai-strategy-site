@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Leadership One-Pager</title>
+  <link rel="stylesheet" href="CSS/style.css"/>
+  <style>
+    @media print {
+      nav, .no-print { display:none !important; }
+      body { background:#fff; color:#000; }
+      .card { box-shadow:none; border:1px solid #ddd; }
+      .grid { gap:12px; }
+      .container { max-width:940px; }
+    }
+    .error { background:#2a0f14; border:1px solid #8a2b2b; color:#ffd8d8; padding:12px; border-radius:10px; }
+  </style>
+  <script defer src="JS/site.js"></script>
+  <script defer src="JS/ai.js"></script>
+</head>
+<body>
+  <nav class="no-print">
+    <div class="inner">
+      <div class="brand"><img src="img/icon.png" alt="icon"/><span>Human + AI Strategy</span></div>
+      <div class="navlinks">
+        <a href="index.html">Home</a><a href="solutions.html">Solutions</a>
+        <a href="governance.html">Governance</a><a href="comms.html">Comms</a>
+        <a href="pulse.html">Pulse</a><a href="day.html">Day-in-the-Life</a>
+        <a href="about.html">About</a><a href="playbook.html">Playbook</a>
+        <a href="star.html">STAR</a><a href="leadership.html">Leadership</a>
+        <a href="https://github.com/meobrien22/human-ai-strategy-site" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/meobrien22/human-ai-strategy-site#readme" target="_blank" rel="noopener">View README</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row no-print" style="justify-content:flex-end;margin-top:10px">
+      <button class="button" onclick="window.print()">Print</button>
+    </div>
+
+    <div id="content">
+      <div class="card">
+        <h2>People Tech — Human + AI Strategy (One-Pager)</h2>
+        <p class="small">Applying AI across the HR stack (recruiting, onboarding, learning, compensation, workforce planning) with responsible, inclusive adoption. Governance domains: policy, ethics, bias, security, privacy.</p>
+      </div>
+
+      <div class="grid cols-3" id="kpis"></div>
+
+      <div class="grid cols-2" style="margin-top:12px">
+        <div class="card">
+          <h3>Top 5 Solutions (by Governance)</h3>
+          <table class="table" id="tops"></table>
+        </div>
+        <div class="card">
+          <h3>Risk Register — Open Items</h3>
+          <table class="table" id="risks"></table>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <h3>Council Watchpoints & Cadence</h3>
+        <div id="watch"></div>
+      </div>
+    </div>
+
+    <div id="err" style="display:none" class="error"></div>
+  </div>
+
+  <script>
+  (async function(){
+    try{
+      const {solutions=[], risks=[], cadence={daily:[],weekly:[],monthly:[]}} = await loadAllData();
+      const rows = (solutions||[]).map(s=>({ ...s, scores: scoreSolution(s) }));
+      const len = Math.max(1, rows.length);
+      const avgGov = Math.round(rows.reduce((a,c)=>a + (c.scores?.governance||0), 0)/len);
+      const avgPriority = Math.round(rows.reduce((a,c)=>a + (c.scores?.wsjf||0), 0)/len);
+      const openRisks = (risks||[]).filter(r=>r.status!=='Closed');
+
+      document.getElementById('kpis').innerHTML = `
+        <div class="card"><h4>Avg Governance</h4><div class="kpi"><div class="val">${isFinite(avgGov)?avgGov:0}</div><span>Policy • Ethics • Bias • Security • Privacy</span></div></div>
+        <div class="card"><h4>Avg Priority</h4><div class="kpi"><div class="val">${isFinite(avgPriority)?avgPriority:0}</div><span>WSJF scoring</span></div></div>
+        <div class="card"><h4>Open Risks</h4><div class="kpi"><div class="val">${openRisks.length}</div><span>Risk register</span></div></div>
+      `;
+
+      const top5 = [...rows].sort((a,b)=>(b.scores?.governance||0) - (a.scores?.governance||0)).slice(0,5);
+      document.getElementById('tops').innerHTML = `
+        <tr><th>Solution</th><th>Priority</th><th>Gov</th><th>Status</th></tr>
+        ${top5.map(s=>`<tr><td>${s.name||'—'}</td><td>${s.scores?.wsjf||0}</td><td>${s.scores?.governance||0}</td><td>${s.status||'—'}</td></tr>`).join('')}
+      `;
+
+      document.getElementById('risks').innerHTML = `
+        <tr><th>ID</th><th>Title</th><th>Severity</th><th>Owner</th></tr>
+        ${openRisks.map(r=>`<tr><td>${r.id||'—'}</td><td>${r.title||'—'}</td><td>${r.severity||'—'}</td><td>${r.owner||'—'}</td></tr>`).join('')}
+      `;
+
+      const dims=['policy','ethics','bias','security','privacy'];
+      const safeAvg = d => rows.length ? Math.round(rows.reduce((a,c)=>a + (c[d]||0), 0)/rows.length) : 0;
+      document.getElementById('watch').innerHTML = `
+        <div class="grid cols-3">
+          ${dims.map(d=>`<div class="card"><h4>${d[0].toUpperCase()+d.slice(1)}</h4><div class="kpi"><div class="val">${safeAvg(d)}</div><span>focus area</span></div></div>`).join('')}
+        </div>
+        <div class="grid cols-3" style="margin-top:10px">
+          <div class="card"><h4>Daily</h4><ul class="clean">${(cadence.daily||[]).map(x=>`<li>${x}</li>`).join('')}</ul></div>
+          <div class="card"><h4>Weekly</h4><ul class="clean">${(cadence.weekly||[]).map(x=>`<li>${x}</li>`).join('')}</ul></div>
+          <div class="card"><h4>Monthly</h4><ul class="clean">${(cadence.monthly||[]).map(x=>`<li>${x}</li>`).join('')}</ul></div>
+        </div>
+      `;
+    }catch(err){
+      console.error(err);
+      document.getElementById('content').style.display='none';
+      const el = document.getElementById('err');
+      el.style.display='block';
+      el.innerHTML = `<strong>Couldn’t load data.</strong><br/>Serve via a local/Pages host so <code>fetch()</code> can read <code>/data/*.json</code>.<br/>Details: ${err.message}`;
+    }
+  })();
+  </script>
+</body>
+</html>

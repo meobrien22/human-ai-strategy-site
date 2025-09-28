@@ -1,0 +1,8 @@
+[
+  {"id":1,"title":"Discover & Align","description":"Stakeholders, goals, constraints, JTBD."},
+  {"id":2,"title":"Define & Prioritize","description":"KPI design, WSJF scoring, roadmap."},
+  {"id":3,"title":"Design & Guardrail","description":"HITL, bias tests, policy mapping."},
+  {"id":4,"title":"Build & Integrate","description":"APIs, data contracts, observability."},
+  {"id":5,"title":"Pilot & Measure","description":"SLOs, telemetry, user feedback."},
+  {"id":6,"title":"Scale & Govern","description":"Runbooks, audits, council cadences."}
+]

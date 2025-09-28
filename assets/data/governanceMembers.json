@@ -1,0 +1,20 @@
+{
+  "large": [
+    {"role":"C-suite Sponsor","raci":"A","decisions":"Direction, funding, high-risk exceptions"},
+    {"role":"People Tech Lead","raci":"R","decisions":"Backlog, capacity, rollout"},
+    {"role":"HR Ops Lead","raci":"R","decisions":"Process change, comms"},
+    {"role":"Responsible AI SME","raci":"C","decisions":"Bias tests, explainability"},
+    {"role":"Security Lead","raci":"C","decisions":"Access, secrets, incident response"},
+    {"role":"Privacy Counsel","raci":"C","decisions":"PII limits, retention, DSR"},
+    {"role":"Data Scientist","raci":"R","decisions":"Metrics, evaluation, drift"},
+    {"role":"Engineering Manager","raci":"R","decisions":"Architecture, SLOs, gating"},
+    {"role":"Product/Design","raci":"R","decisions":"UX, feedback loops"},
+    {"role":"HRBP Representative","raci":"C","decisions":"Change mgmt, enablement"}
+  ],
+  "small": [
+    {"role":"People Tech Lead","raci":"A","decisions":"Direction & tradeoffs"},
+    {"role":"RAI + Privacy (combined)","raci":"C","decisions":"Bias & data policies"},
+    {"role":"Eng Lead","raci":"R","decisions":"Build & SLOs"},
+    {"role":"HR Ops","raci":"R","decisions":"Process & comms"}
+  ]
+}

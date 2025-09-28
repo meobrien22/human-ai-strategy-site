@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en" data-phase="3">
+<head>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Phase 3 — Design & Guardrail</title>
+  <link rel="stylesheet" href="CSS/style.css"/>
+  <script defer src="JS/site.js"></script>
+  <script defer src="JS/ai.js"></script>
+</head>
+<body>
+  <nav>
+    <div class="inner">
+      <div class="brand"><img src="img/icon.png" alt="icon"/><span>Human + AI Strategy</span></div>
+      <div class="navlinks">
+        <a href="index.html">Home</a><a href="solutions.html">Solutions</a>
+        <a href="governance.html">Governance</a><a href="comms.html">Comms</a>
+        <a href="pulse.html">Pulse</a><a href="day.html">Day-in-the-Life</a>
+        <a href="about.html">About</a><a href="playbook.html">Playbook</a>
+        <a href="star.html">STAR</a><a href="leadership.html">Leadership</a>
+        <a href="https://github.com/meobrien22/human-ai-strategy-site" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/meobrien22/human-ai-strategy-site#readme" target="_blank" rel="noopener">View README</a>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <h1>Phase 3 — Design & Guardrail</h1>
+    <div id="phase"></div>
+
+    <div class="grid cols-2" style="margin-top:12px">
+      <div class="card">
+        <h3>Guardrails Built-In</h3>
+        <ul class="clean">
+          <li>Human-in-the-loop review for sensitive HR flows.</li>
+          <li>Bias test suites + adverse impact thresholds (&lt;4%).</li>
+          <li>Privacy by design (PII minimization, retention, DSR SLAs).</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Artifacts</h3>
+        <ul class="clean">
+          <li>Model/feature cards with explainability notes.</li>
+          <li>Runbooks for incident/exception handling.</li>
+          <li>Quality gates mapped to policy/ethics/bias/security/privacy.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <script>
+  (async function(){
+    const {phases, phaseActions} = await loadAllData();
+    const n = 3;
+    const p = phases.find(x=>x.id===n);
+    const acts = phaseActions.filter(x=>x.phase===n);
+    document.getElementById('phase').innerHTML = `
+      <div class="card">
+        <h3>${p.title}</h3>
+        <p class="small">${p.description}</p>
+        <table class="table">
+          <tr><th>Deliverable</th><th>Owner</th><th>Acceptance</th></tr>
+          ${acts.map(a=>`<tr><td>${a.deliverable}</td><td>${a.owner}</td><td class="small">${a.acceptance}</td></tr>`).join('')}
+        </table>
+      </div>`;
+  })();
+  </script>
+</body>
+</html>

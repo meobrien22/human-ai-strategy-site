@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Pulse Hub</title>
+  <link rel="stylesheet" href="CSS/style.css"/>
+  <script defer src="JS/site.js"></script>
+  <script defer src="JS/ai.js"></script>
+</head>
+<body>
+  <nav>
+    <div class="inner">
+      <div class="brand"><img src="img/icon.png" alt="icon"/><span>Human + AI Strategy</span></div>
+      <div class="navlinks">
+        <a href="index.html">Home</a><a href="solutions.html">Solutions</a>
+        <a href="governance.html">Governance</a><a href="comms.html">Comms</a>
+        <a href="pulse.html">Pulse</a><a href="day.html">Day-in-the-Life</a>
+        <a href="about.html">About</a><a href="playbook.html">Playbook</a>
+        <a href="star.html">STAR</a><a href="leadership.html">Leadership</a>
+        <a href="https://github.com/meobrien22/human-ai-strategy-site" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/meobrien22/human-ai-strategy-site#readme" target="_blank" rel="noopener">View README</a>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <h1>People Tech Pulse</h1>
+    <div class="grid cols-3">
+      <div class="card"><h3>Satisfaction</h3><div id="pSat"></div></div>
+      <div class="card"><h3>Trust</h3><div id="pTrust"></div></div>
+      <div class="card"><h3>Change Readiness</h3><div id="pReady"></div></div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h3>Latest Themes</h3>
+      <ul class="clean" id="themes"></ul>
+    </div>
+  </div>
+  <script>
+  function gauge(el,val){ el.innerHTML = `<div class="progress"><span style="width:${val}%"></span></div><div class="small">${val}%</div>`; }
+  gauge(document.getElementById('pSat'), 78);
+  gauge(document.getElementById('pTrust'), 81);
+  gauge(document.getElementById('pReady'), 73);
+  document.getElementById('themes').innerHTML = `
+    <li>Appreciation for transparent change notices</li>
+    <li>Desire for clearer policy language examples</li>
+    <li>Requests for bias review visibility on HR flows</li>`;
+  </script>
+</body>
+</html>

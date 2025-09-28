@@ -1,0 +1,8 @@
+[
+  {"phase":1,"deliverable":"Stakeholder map & goals","owner":"People Tech","acceptance":"Signed off"},
+  {"phase":2,"deliverable":"Prioritized backlog (WSJF)","owner":"People Tech","acceptance":"Approved by council"},
+  {"phase":3,"deliverable":"RAI test plan + gates","owner":"RAI SME","acceptance":"Thresholds defined"},
+  {"phase":4,"deliverable":"Telemetry + dashboards","owner":"Eng","acceptance":"Metrics visible"},
+  {"phase":5,"deliverable":"Pilot report","owner":"People Tech","acceptance":"KPIs met"},
+  {"phase":6,"deliverable":"Playbook & runbooks","owner":"Council","acceptance":"Adopted"}
+]

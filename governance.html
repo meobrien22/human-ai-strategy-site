@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Governance Council</title>
+  <link rel="stylesheet" href="CSS/style.css"/>
+  <script defer src="JS/site.js"></script>
+  <script defer src="JS/ai.js"></script>
+</head>
+<body>
+  <nav>
+    <div class="inner">
+      <div class="brand"><img src="img/icon.png" alt="icon"/><span>Human + AI Strategy</span></div>
+      <div class="navlinks">
+        <a href="index.html">Home</a><a href="solutions.html">Solutions</a>
+        <a href="governance.html">Governance</a><a href="comms.html">Comms</a>
+        <a href="pulse.html">Pulse</a><a href="day.html">Day-in-the-Life</a>
+        <a href="about.html">About</a><a href="playbook.html">Playbook</a>
+        <a href="star.html">STAR</a><a href="leadership.html">Leadership</a>
+        <a href="https://github.com/meobrien22/human-ai-strategy-site" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/meobrien22/human-ai-strategy-site#readme" target="_blank" rel="noopener">View README</a>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <h1>Governance Council: Operating Model</h1>
+    <div class="tabbar">
+      <div class="tab active" data-mode="large">Large Council</div>
+      <div class="tab" data-mode="small">Small Council</div>
+    </div>
+
+    <div class="grid cols-2">
+      <div class="card">
+        <h3 id="modelTitle">Large Council (Enterprise)</h3>
+        <table class="table" id="councilTable"></table>
+      </div>
+      <div class="card">
+        <h3>Watchpoints: Policy • Ethics • Bias • Security • Privacy</h3>
+        <table class="table" id="watchTable"></table>
+        <div class="notice small">Each watchpoint maps to owners, metrics, thresholds, and escalation paths.</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h3>Cadence</h3>
+      <div id="cadence"></div>
+    </div>
+  </div>
+
+  <script>
+  (async function(){
+    const {members, cadence, solutions} = await loadAllData();
+    const dims=['policy','ethics','bias','security','privacy'];
+    const avg = d => Math.round(solutions.reduce((a,c)=>a+(c[d]||0),0)/Math.max(1,solutions.length));
+
+    function renderWatch(){
+      const tbl = document.getElementById('watchTable');
+      tbl.innerHTML = `<tr><th>Domain</th><th>Avg</th><th>Metric Examples</th><th>Escalation</th></tr>` + 
+        dims.map(d=>{
+          const a = avg(d);
+          const badge = a>=80?'ok':(a>=60?'warn':'crit');
+          return `<tr>
+            <td>${d[0].toUpperCase()+d.slice(1)}</td>
+            <td><span class="badge ${badge}">${a}</span></td>
+            <td class="small">${
+              d==='policy'?'SOP coverage, version drift, exception logs':
+              d==='ethics'?'HITL coverage, explainability rate, contestations':
+              d==='bias'?'Adverse impact deltas, sampling parity, thumbs-down %':
+              d==='security'?'Auth anomalies, rate-limit hits, blocked calls':
+              'PII exposure rate, retention violations, DSR SLA'
+            }</td>
+            <td class="small">Owner → Working Group → Council → C-suite (critical)</td>
+          </tr>`;
+        }).join('');
+    }
+    function renderCouncil(mode='large'){
+      const title = document.getElementById('modelTitle');
+      const data = members[mode]||[];
+      title.textContent = mode==='large'?'Large Council (Enterprise)':'Small Council (Lean/BU)';
+      const tbl = document.getElementById('councilTable');
+      tbl.innerHTML = `<tr><th>Role</th><th>RACI</th><th>Key Decisions</th></tr>` +
+        data.map(r=>`<tr><td>${r.role}</td><td>${r.raci}</td><td class="small">${r.decisions}</td></tr>`).join('');
+    }
+    function renderCadence(){
+      const c = cadence||{daily:[],weekly:[],monthly:[]};
+      document.getElementById('cadence').innerHTML = `
+        <div class="grid cols-3">
+          <div class="card"><h4>Daily</h4><ul class="clean">${(c.daily||[]).map(i=>`<li>${i}</li>`).join('')}</ul></div>
+          <div class="card"><h4>Weekly</h4><ul class="clean">${(c.weekly||[]).map(i=>`<li>${i}</li>`).join('')}</ul></div>
+          <div class="card"><h4>Monthly</h4><ul class="clean">${(c.monthly||[]).map(i=>`<li>${i}</li>`).join('')}</ul></div>
+        </div>`;
+    }
+    renderCouncil('large'); renderWatch(); renderCadence();
+
+    document.querySelectorAll('.tab').forEach(t=>{
+      t.addEventListener('click',()=>{
+        document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+        t.classList.add('active');
+        renderCouncil(t.dataset.mode);
+      });
+    });
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Communications</title>
+  <link rel="stylesheet" href="CSS/style.css"/>
+  <script defer src="JS/site.js"></script>
+  <script defer src="JS/ai.js"></script>
+</head>
+<body>
+  <nav>
+    <div class="inner">
+      <div class="brand"><img src="img/icon.png" alt="icon"/><span>Human + AI Strategy</span></div>
+      <div class="navlinks">
+        <a href="index.html">Home</a><a href="solutions.html">Solutions</a>
+        <a href="governance.html">Governance</a><a href="comms.html">Comms</a>
+        <a href="pulse.html">Pulse</a><a href="day.html">Day-in-the-Life</a>
+        <a href="about.html">About</a><a href="playbook.html">Playbook</a>
+        <a href="star.html">STAR</a><a href="leadership.html">Leadership</a>
+        <a href="https://github.com/meobrien22/human-ai-strategy-site" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/meobrien22/human-ai-strategy-site#readme" target="_blank" rel="noopener">View README</a>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <h1>AI-Assisted Communications</h1>
+    <div class="grid cols-2">
+      <div class="card">
+        <h3>People Tech Updates → Stakeholders</h3>
+        <div class="toolbar">
+          <input id="topic" class="input" placeholder="Topic (e.g., Policy update, Bias finding)"/>
+          <input id="audience" class="input" placeholder="Audience (Execs, HRBP, Eng, All Hands)"/>
+        </div>
+        <textarea id="notes" class="input" style="width:100%;height:120px" placeholder="Key points…"></textarea>
+        <div class="row" style="margin-top:8px">
+          <button class="button" id="gen">Generate Draft</button>
+          <button class="button ghost" id="clear">Clear</button>
+        </div>
+        <div class="card" style="margin-top:10px"><h4>Draft</h4><div id="draft" class="small"></div></div>
+      </div>
+      <div class="card">
+        <h3>Pulse Templates</h3>
+        <ul class="clean">
+          <li>Weekly digest (governance KPIs, incidents, mitigations).</li>
+          <li>Monthly council summary (decisions, exceptions, roadmap diffs).</li>
+          <li>Change notice (what, why, impact, how to revert, contact).</li>
+        </ul>
+        <div class="notice small">Demo of how AI could assist tone + structure. (No external APIs used.)</div>
+      </div>
+    </div>
+  </div>
+  <script>
+  document.getElementById('gen').onclick=()=>{
+    const t=document.getElementById('topic').value||'Update';
+    const a=document.getElementById('audience').value||'Stakeholders';
+    const n=document.getElementById('notes').value||'';
+    const body = `
+      <p><strong>${t}</strong> — for <em>${a}</em></p>
+      <p>What changed: brief summary in plain language.</p>
+      <p>Why it matters: tie to People Tech outcomes (fairness, privacy, trust, productivity).</p>
+      <p>KPIs: governance score trend, incident count, SLA adherence.</p>
+      <p>Action: what recipients should do; link to runbook/FAQ.</p>
+      <p>Contact: governance mailbox; office hours.</p>
+      ${n?`<p><em>Notes:</em> ${n}</p>`:''}
+    `;
+    document.getElementById('draft').innerHTML=body;
+  };
+  document.getElementById('clear').onclick=()=>document.getElementById('draft').innerHTML='';
+  </script>
+</body>
+</html>

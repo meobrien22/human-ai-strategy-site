@@ -1,0 +1,42 @@
+[
+  {
+    "title":"Policy",
+    "description":"Documented, versioned rules for appropriate use.",
+    "metrics":[
+      {"name":"SOP coverage","threshold":">=95%","action":"Block launches under 95%"},
+      {"name":"Exception time-to-close","threshold":"<7 days","action":"Escalate at 7 days"}
+    ]
+  },
+  {
+    "title":"Ethics",
+    "description":"Fair, accountable, explainable systems with HITL.",
+    "metrics":[
+      {"name":"Explainability coverage","threshold":">=90%","action":"Require model cards"},
+      {"name":"Contestations resolved","threshold":">=95%","action":"Escalate at 48h"}
+    ]
+  },
+  {
+    "title":"Bias",
+    "description":"Detect and reduce disparate impact; monitor parity.",
+    "metrics":[
+      {"name":"Adverse impact delta","threshold":"<4%","action":"Block >4%"},
+      {"name":"Thumbs-down rate","threshold":"<2%","action":"Review conversation logs"}
+    ]
+  },
+  {
+    "title":"Security",
+    "description":"Protect identities, secrets, and endpoints.",
+    "metrics":[
+      {"name":"Auth anomalies","threshold":"0 critical/day","action":"Page on-call"},
+      {"name":"Rate-limit hits","threshold":"<1%","action":"Scale/optimize"}
+    ]
+  },
+  {
+    "title":"Privacy",
+    "description":"Respect data minimization and retention.",
+    "metrics":[
+      {"name":"PII exposure","threshold":"0","action":"Immediate incident flow"},
+      {"name":"DSR SLA","threshold":">=99%","action":"Escalate at risk"}
+    ]
+  }
+]

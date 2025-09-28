@@ -1,0 +1,17 @@
+{
+  "daily": [
+    "Review incidents (auth anomalies, bias flags, thumbs-down feedback).",
+    "Check top 3 impact solutions; post digest to Comms.",
+    "Approve/deny change requests per runbook."
+  ],
+  "weekly": [
+    "Council working group sync; update risk register.",
+    "Quality gates review (policy, ethics, bias, security, privacy).",
+    "Prioritization refresh (WSJF) against capacity."
+  ],
+  "monthly": [
+    "Council decision meeting; exceptions log review.",
+    "Roadmap & KPI deep dive; publish pulse.",
+    "Audit sampling & model card updates."
+  ]
+}

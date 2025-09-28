@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Solutions Catalog</title>
+  <link rel="stylesheet" href="CSS/style.css"/>
+  <script defer src="JS/site.js"></script>
+  <script defer src="JS/ai.js"></script>
+</head>
+<body>
+  <nav>
+    <div class="inner">
+      <div class="brand"><img src="img/icon.png" alt="icon"/><span>Human + AI Strategy</span></div>
+      <div class="navlinks">
+        <a href="index.html">Home</a><a href="solutions.html">Solutions</a>
+        <a href="governance.html">Governance</a><a href="comms.html">Comms</a>
+        <a href="pulse.html">Pulse</a><a href="day.html">Day-in-the-Life</a>
+        <a href="about.html">About</a><a href="playbook.html">Playbook</a>
+        <a href="star.html">STAR</a><a href="leadership.html">Leadership</a>
+        <a href="https://github.com/meobrien22/human-ai-strategy-site" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/meobrien22/human-ai-strategy-site#readme" target="_blank" rel="noopener">View README</a>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <h1>AI Solutions Portfolio</h1>
+    <div class="toolbar">
+      <input id="q" class="input" placeholder="Search solutions…"/>
+      <select id="sort" class="input">
+        <option value="wsjf">Priority</option>
+        <option value="governance">Governance</option>
+        <option value="dailyImpact">Daily Impact</option>
+      </select>
+      <div class="row">
+        <button class="button ghost" id="expJson">Export JSON</button>
+        <button class="button ghost" id="expCsv">Export CSV</button>
+      </div>
+    </div>
+    <div class="card">
+      <table class="table" id="tbl"></table>
+    </div>
+  </div>
+  <script>
+  (async function(){
+    const {solutions} = await loadAllData();
+    let rows = solutions.map(s=>({ ...s, scores: scoreSolution(s) }));
+    const q=document.getElementById('q'), sort=document.getElementById('sort');
+    let current = rows;
+
+    function render(){
+      const term=(q.value||'').toLowerCase();
+      let list = rows.filter(r=>r.name.toLowerCase().includes(term) || (r.category||'').toLowerCase().includes(term));
+      list = list.sort((a,b)=>b.scores[sort.value]-a.scores[sort.value]);
+      current = list;
+      const html = `
+        <tr><th>Solution</th><th>Category</th><th>Priority</th><th>Governance</th><th>Owner</th><th>Status</th><th>KPIs</th></tr>
+        ${list.map(s=>{
+          const b = statusBadge(s.scores.governance);
+          const k = Object.entries(s.kpis||{}).slice(0,3).map(([k,v])=>`<span class="tag">${k}: ${v}</span>`).join('');
+          return `<tr>
+            <td><strong>${s.name}</strong></td>
+            <td>${s.category||'—'}</td>
+            <td>${s.scores.wsjf}</td>
+            <td><span class="badge ${b.cls}">${s.scores.governance} ${b.label}</span></td>
+            <td>${s.owner||'—'}</td>
+            <td>${s.status||'—'}</td>
+            <td>${k||'—'}</td>
+          </tr>`;
+        }).join('')}
+      `;
+      document.getElementById('tbl').innerHTML = html;
+    }
+    q.addEventListener('input',render);
+    sort.addEventListener('change',render);
+    render();
+
+    document.getElementById('expJson').onclick = ()=>{
+      const data = current.map(s=>({
+        name:s.name, category:s.category, owner:s.owner, status:s.status,
+        priority:s.scores.wsjf, governance:s.scores.governance, kpis:s.kpis||{}
+      }));
+      __exportUtils.exportJSON('solutions_view.json', data);
+    };
+    document.getElementById('expCsv').onclick = ()=>{
+      const rows = current.map(s=>({
+        name:s.name, category:s.category, owner:s.owner, status:s.status,
+        priority:s.scores.wsjf, governance:s.scores.governance
+      }));
+      __exportUtils.exportCSV('solutions_view.csv', rows);
+    };
+  })();
+  </script>
+</body>
+</html>
