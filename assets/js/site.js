@@ -1,4 +1,4 @@
-// Highlight current page in nav
+// NAV highlight
 (function(){
   const path = location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('nav a').forEach(a=>{
@@ -6,26 +6,17 @@
   });
 })();
 
-// Fetch JSON helper
+// Basic fetch + utils
 async function loadJSON(path){
   const res = await fetch(path);
   if(!res.ok) throw new Error(`Failed to load ${path}`);
   return res.json();
 }
-
-// Format helpers
 const fmt = {
   pct:x=>`${Math.round((x||0)*100)}%`,
   num:x=>Number(x||0).toLocaleString(),
   date:s=>s?new Date(s).toLocaleDateString():''
 };
-
-// Simple progress bar
-function renderProgress(el, pct){
-  el.innerHTML = `<div class="progress"><span style="width:${Math.max(0,Math.min(100,pct))}%"></span></div>`;
-}
-
-// Tiny bar chart
 function drawBars(canvasId, labels, values){
   const c = document.getElementById(canvasId);
   if(!c) return;
@@ -52,12 +43,11 @@ function drawBars(canvasId, labels, values){
   });
 }
 
-/* ===== Export helpers ===== */
+// Export helpers
 function download(filename, content, mime='text/plain'){
   const blob = new Blob([content], {type: mime});
   const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = filename; a.click();
+  const a = document.createElement('a'); a.href = url; a.download = filename; a.click();
   URL.revokeObjectURL(url);
 }
 function toCSV(rows){
@@ -70,3 +60,8 @@ function toCSV(rows){
 function exportJSON(filename, data){ download(filename, JSON.stringify(data, null, 2), 'application/json'); }
 function exportCSV(filename, rows){ download(filename, toCSV(rows), 'text/csv'); }
 window.__exportUtils = { exportJSON, exportCSV };
+
+// GOVERNANCE scoring helpers expected in JS/ai.js:
+// - scoreSolution(sol) -> { wsjf, governance, dailyImpact }
+// - statusBadge(score) -> { cls:'ok'|'warn'|'crit', label:string }
+// - loadAllData() -> {solutions, risks, cadence, members, phases, phaseActions, playbook, agenda}
