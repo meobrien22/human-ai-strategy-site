@@ -1,68 +1,165 @@
-/* ================= Design Tokens (Nav + Hero only) ================= */
+/* ================= Dropbox-Inspired Design System ================= */
 :root{
-  --bg:#0a0f1e;
-  --surface:#0f162b;
-  --card:#151f3a;
-  --ink:#e9eefc;
-  --muted:#98a9cf;
-  --accent:#73b0ff;
-  --radius:16px;
-  --shadow:0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.02);
+  /* Core palette (Dropbox-ish) */
+  --bg: #ffffff;
+  --text: #0b1220;                /* near-black */
+  --muted: #5b6b8b;               /* slate text */
+  --line: #e9edf5;                /* light divider */
+  --surface: #ffffff;             /* cards/nav */
+  --surface-soft: #f7f9fc;        /* subtle panels */
+  --primary: #0061ff;             /* Dropbox blue */
+  --primary-600: #1e54ff;
+  --primary-700: #1a49e3;
+  --accent: var(--primary);
+
+  /* Feedback */
+  --ok:#17b26a; --warn:#f59f00; --crit:#ef4444;
+
+  /* Radii / shadows / spacing scale */
+  --radius-sm: 10px;
+  --radius: 14px;
+  --radius-lg: 20px;
+  --shadow-sm: 0 2px 8px rgba(16, 24, 40, .08);
+  --shadow:    0 8px 30px rgba(16, 24, 40, .12);
+  --container: 1200px;
+
+  /* Typography scale */
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  --fs-hero: clamp(28px, 4vw, 44px);
+  --fs-h1:   clamp(24px, 3vw, 32px);
+  --fs-h2:   clamp(20px, 2.4vw, 24px);
+  --fs-h3:   18px;
+  --fs-body: 16px;
+  --fs-small: 14px;
 }
 
 /* ================= Base ================= */
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
-a{color:var(--accent);text-decoration:none}
-a:hover{opacity:.95}
-.container{max-width:1200px;margin:0 auto;padding:24px}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:400 var(--fs-body)/1.55 var(--font-sans); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale}
+img{max-width:100%;display:block}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
+.container{max-width:var(--container);margin:0 auto;padding:24px}
 
-/* ================= Modern Navigation ================= */
+/* ================= Navigation (clean + modern) ================= */
 nav{
   position:sticky; top:0; z-index:50;
-  background:rgba(10,15,30,.85);
-  backdrop-filter:blur(10px);
-  border-bottom:1px solid rgba(255,255,255,.06);
+  background:rgba(255,255,255,.9);
+  backdrop-filter:saturate(140%) blur(10px);
+  border-bottom:1px solid var(--line);
 }
-nav .inner{
-  display:flex; align-items:center; justify-content:space-between;
-  gap:16px; padding:10px 24px;
-}
-.brand{display:flex; align-items:center; gap:10px; font-weight:800}
+nav .inner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 24px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800}
 .brand img{width:28px;height:28px;border-radius:8px}
-.navlinks{display:flex; gap:8px; flex-wrap:wrap}
+.navlinks{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .navlinks a{
-  padding:8px 12px; border-radius:10px;
-  color:#cfe1ff; border:1px solid transparent; transition:all .15s ease;
+  color:#2b3a55; border-radius:10px; padding:8px 12px; text-decoration:none;
+  border:1px solid transparent; transition:all .15s ease;
 }
-.navlinks a:hover{background:#0f172e; border-color:rgba(255,255,255,.08)}
-.navlinks a.active{background:#112144; border-color:rgba(255,255,255,.12); color:#e8f1ff}
+.navlinks a:hover{background:#f2f6ff;border-color:#e3ebff}
+.navlinks a.active{background:#eaf1ff;border-color:#d6e5ff;color:#183b8c}
 
-/* ================= Buttons (for hero CTAs) ================= */
+/* ================= Buttons ================= */
 .button{
-  background:var(--accent); color:#071228; border:none;
-  padding:10px 14px; border-radius:12px; font-weight:700;
-  cursor:pointer; box-shadow:var(--shadow)
+  background:var(--primary); color:#fff; border:none; padding:10px 16px;
+  border-radius:12px; font-weight:700; cursor:pointer; box-shadow:var(--shadow-sm);
 }
-.button.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.button:hover{background:var(--primary-600)}
+.button:active{background:var(--primary-700)}
+.button.ghost{
+  background:#fff; color:var(--primary); border:1px solid #d6e5ff;
+}
+.button.ghost:hover{background:#f7faff}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 
-/* ================= Hero ================= */
+/* ================= Cards / Tables / Grid ================= */
+.card{
+  background:var(--surface); border:1px solid var(--line);
+  border-radius:var(--radius); box-shadow:var(--shadow-sm); padding:18px;
+}
+.panel{
+  background:var(--surface-soft); border:1px solid var(--line);
+  border-radius:var(--radius); padding:18px;
+}
+.grid{display:grid;gap:16px}
+.grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:1000px){ .grid.cols-2, .grid.cols-3{grid-template-columns:1fr} }
+
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.table th{color:#516188;font-weight:700;font-size:var(--fs-small)}
+
+/* ================= Typography helpers ================= */
+h1,h2,h3,h4{margin:0 0 8px 0;font-weight:800}
+h1{font-size:var(--fs-h1)} h2{font-size:var(--fs-h2)} h3{font-size:var(--fs-h3)}
+.small{color:var(--muted);font-size:var(--fs-small)}
+
+/* ================= Hero (Dropbox vibe) ================= */
 .hero{
-  position:relative; overflow:hidden; border-radius:22px; padding:28px;
+  position:relative; overflow:hidden; border-radius:var(--radius-lg); padding:28px 28px 32px;
   background:
-    radial-gradient(1100px 500px at -10% -10%, #203574 0%, transparent 60%),
-    radial-gradient(800px 380px at 110% -20%, #2b478c 0%, transparent 60%),
-    linear-gradient(180deg,#0e1530 0%, #0b1220 100%);
-  border:1px solid rgba(255,255,255,.08);
+    radial-gradient(1400px 600px at -15% -25%, #e8f1ff 0%, transparent 70%),
+    radial-gradient(1000px 500px at 115% -15%, #edf5ff 0%, transparent 70%),
+    linear-gradient(180deg,#ffffff 0%, #f6f9ff 100%);
+  border:1px solid var(--line);
   box-shadow:var(--shadow);
 }
-.hero h1{margin:0 0 6px 0; font-size:2.3rem}
-.hero p{margin:0; color:var(--muted); max-width:820px}
-.hero-cta{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+.hero h1{font-size:var(--fs-hero); letter-spacing:-0.02em}
+.hero p{color:#485a7d; max-width:880px}
+.hero-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
 .hero-art{
-  position:absolute; right:-60px; bottom:-60px; width:520px; opacity:.32; pointer-events:none;
-  filter:drop-shadow(0 10px 20px rgba(0,0,0,.25));
+  position:absolute; right:-60px; bottom:-60px; width:520px; opacity:.18; pointer-events:none;
+  filter:drop-shadow(0 10px 20px rgba(16,24,40,.1));
 }
 
-/* ================= Helpers ================= */
+/* ================= KPI band (light) ================= */
+.kpi-band{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}
+.kpi-card{
+  background:#fff; border:1px solid var(--line); border-radius:12px; padding:14px;
+  display:flex; flex-direction:column; gap:4px;
+}
+.kpi{display:flex;align-items:baseline;gap:8px}
+.kpi .val{font-size:24px;font-weight:800;color:#11233f}
+.kpi .label{color:var(--muted);font-size:var(--fs-small)}
+
+/* ================= Pills / Tabs ================= */
+.tabbar{display:flex;gap:8px;flex-wrap:wrap}
+.tab{padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer}
+.tab.active, .tab:hover{border-color:#bdd4ff;background:#f2f7ff}
+
+/* ================= Badges ================= */
+.badge{padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;border:1px solid var(--line);background:#fff;color:#35507a}
+.badge.ok{background:#eefcf5;color:#0f6a3d;border-color:#c9f2de}
+.badge.warn{background:#fff7e6;color:#8a6100;border-color:#ffe4b2}
+.badge.crit{background:#fff1f1;color:#8a1f1f;border-color:#ffd1d1}
+
+/* ================= SVG Map Wrapper ================= */
+.svgwrap{
+  background:#fff; border:1px solid var(--line); border-radius:var(--radius);
+  box-shadow:var(--shadow-sm); padding:10px;
+}
+svg{width:100%;height:auto;display:block}
+.btn-rect{cursor:pointer;transition:transform .05s ease, filter .15s ease;outline:none}
+.btn-rect:hover{filter:brightness(1.04)}
+.btn-rect:active{transform:translateY(1px)}
+.btn-rect:focus{stroke:#111;stroke-width:2}
+.svg-label{font:600 12px/1.3 var(--font-sans); fill:#132a52}
+.svg-sub{font:500 11px/1.3 var(--font-sans); fill:#5b6b8b}
+.legend{display:flex;gap:10px;flex-wrap:wrap}
+.legend .chip{display:flex;gap:8px;align-items:center;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:#fff}
+.legend .swatch{width:12px;height:12px;border-radius:3px}
+
+/* ================= Inputs (for future sections) ================= */
+.input{
+  background:#fff;border:1px solid var(--line);border-radius:10px;color:var(--text);
+  padding:10px 12px; min-width:220px;
+}
+.input:focus{outline:2px solid #cfe0ff; border-color:#cfe0ff}
+
+/* ================= Utilities ================= */
 .hidden{display:none}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
+/* ================= Footer ================= */
+.footer{color:#6a7c9e;text-align:center;padding:24px;margin-top:24px;border-top:1px solid var(--line)}
