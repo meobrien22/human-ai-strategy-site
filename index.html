@@ -9,6 +9,7 @@
   <script defer src="JS/ai.js"></script>
 </head>
 <body>
+  <!-- NAV -->
   <nav>
     <div class="inner">
       <div class="brand">
@@ -27,17 +28,17 @@
         <a href="star.html">STAR</a>
         <a href="leadership.html">Leadership</a>
         <a href="https://github.com/meobrien22/human-ai-strategy-site" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://github.com/meobrien22/human-ai-strategy-site#readme" target="_blank" rel="noopener">View README</a>
       </div>
     </div>
   </nav>
 
   <div class="container">
-    <!-- HERO + QUICK START + KPIs -->
-    <section class="hub-hero">
+    <!-- HERO -->
+    <section class="hero">
       <h1>Human + AI Strategy Hub</h1>
-      <p>Applying AI across the HR stack with responsible, inclusive adoption—governed by policy, ethics, bias, security, and privacy.</p>
-      <div class="quick-start" style="margin-top:12px">
+      <p>Apply AI across the HR stack with responsible, inclusive adoption—governed by policy, ethics, bias, security, and privacy.</p>
+      <img class="hero-art" src="img/icon.png" alt="" />
+      <div class="quickstart">
         <a href="leadership.html">Leadership One-Pager</a>
         <a href="governance.html">Governance Council</a>
         <a href="solutions.html">Solutions Catalog</a>
@@ -46,19 +47,22 @@
       <div class="kpi-band" id="kpiBand"></div>
     </section>
 
-    <!-- TIMELINE -->
+    <!-- 30 / 60 / 90 TIMELINE -->
     <section class="timeline">
-      <h2>Execution Timeline</h2>
-      <div class="tl-rail" id="tlRail" role="tablist" aria-label="Phases 1 to 6"></div>
-      <div class="tl-panel" id="tlPanel" role="tabpanel" aria-live="polite"></div>
+      <h2>30 • 60 • 90 Day Plan (Phases)</h2>
+      <div id="tlScroll" class="tl-scroll" aria-label="Phases scroll"></div>
+      <div class="tl-panel">
+        <div id="tlPanel" class="card" role="region" aria-live="polite"></div>
+      </div>
     </section>
 
-    <!-- TWO-COLUMN: SVG map + Solutions / Impact -->
+    <!-- TWO-COLUMN: MAP + SNAPSHOT -->
     <section class="two-col">
+      <!-- Interactive Governance Map -->
       <div class="svgwrap card">
         <h3 style="margin:6px 8px 10px 8px;">Interactive Governance Map</h3>
-        <svg viewBox="0 0 1200 820" role="group" aria-label="Governance Map">
-          <!-- Headings -->
+        <svg viewBox="0 0 1200 820" preserveAspectRatio="xMidYMid meet" role="group" aria-label="Governance Map">
+          <!-- headings -->
           <text x="70" y="60" class="svg-label">Strategy</text>
           <text x="370" y="60" class="svg-label">Standards</text>
           <text x="680" y="60" class="svg-label">Implementation</text>
@@ -173,6 +177,7 @@
         </div>
       </div>
 
+      <!-- Snapshot (Top Solutions + Daily Impact) -->
       <div>
         <div class="card">
           <h3>Top 5 Solutions (Governance)</h3>
@@ -182,7 +187,7 @@
           <h3>Top 3 Daily Impact</h3>
           <table class="table" id="topDailyTable"></table>
           <canvas id="impactChart"></canvas>
-          <div class="row" style="display:flex;gap:10px;margin-top:8px">
+          <div class="grid cols-3" style="margin-top:8px">
             <button class="button ghost" id="expJSON">Export JSON</button>
             <button class="button ghost" id="expCSV">Export CSV</button>
             <a class="button" href="leadership.html">One-Pager</a>
@@ -192,7 +197,7 @@
     </section>
 
     <!-- CADENCE -->
-    <section style="margin-top:16px">
+    <section style="margin-top:18px">
       <h2>Day • Week • Month Cadence</h2>
       <div class="tabs">
         <button class="tab active" data-tab="day">Day</button>
@@ -210,26 +215,26 @@
 
   <script>
   // ===== KPIs =====
-  (async function renderKPIs(){
+  (async function(){
     const {solutions, risks} = await loadAllData();
-    const scored = solutions.map(s=>({ ...s, scores: scoreSolution(s) }));
-    const avgGov = Math.round(scored.reduce((a,c)=>a+c.scores.governance,0)/Math.max(1,scored.length));
-    const avgPriority = Math.round(scored.reduce((a,c)=>a+c.scores.wsjf,0)/Math.max(1,scored.length));
+    const items = solutions.map(s=>({ ...s, scores: scoreSolution(s) }));
+    const avgGov = Math.round(items.reduce((a,c)=>a+c.scores.governance,0)/Math.max(1,items.length));
+    const avgPriority = Math.round(items.reduce((a,c)=>a+c.scores.wsjf,0)/Math.max(1,items.length));
     const openRisks = risks.filter(r=>r.status!=='Closed').length;
-
     document.getElementById('kpiBand').innerHTML = `
-      <div class="kpi-card"><div class="kpi"><span class="val">${avgGov}</span><span>Avg Governance</span></div><div class="label">Policy • Ethics • Bias • Security • Privacy</div></div>
-      <div class="kpi-card"><div class="kpi"><span class="val">${avgPriority}</span><span>Avg Priority</span></div><div class="label">WSJF-style scoring</div></div>
-      <div class="kpi-card"><div class="kpi"><span class="val">${openRisks}</span><span>Open Risks</span></div><div class="label">Risk register</div></div>
+      <div class="kpi-card"><div class="kpi"><span class="val">${avgGov}</span><span>Avg Governance</span></div><div class="small">Policy • Ethics • Bias • Security • Privacy</div></div>
+      <div class="kpi-card"><div class="kpi"><span class="val">${avgPriority}</span><span>Avg Priority</span></div><div class="small">WSJF-style scoring</div></div>
+      <div class="kpi-card"><div class="kpi"><span class="val">${openRisks}</span><span>Open Risks</span></div><div class="small">Risk register</div></div>
     `;
   })();
 
-  // ===== Timeline =====
-  (async function initTimeline(){
+  // ===== 30/60/90 Timeline (scroll + hover) =====
+  (async function(){
     const {phases, phaseActions} = await loadAllData();
-    const rail = document.getElementById('tlRail');
+    const rail = document.getElementById('tlScroll');
     const panel = document.getElementById('tlPanel');
 
+    const short = t => t.replace(/^[^-–—]+[–—-]\s*/,''); // remove "Phase X — "
     function renderPanel(id){
       const p = phases.find(x=>x.id===id);
       const acts = phaseActions.filter(a=>a.phase===id);
@@ -240,36 +245,42 @@
           <tr><th>Deliverable</th><th>Owner</th><th>Acceptance</th></tr>
           ${acts.map(a=>`<tr><td>${a.deliverable}</td><td>${a.owner}</td><td class="small">${a.acceptance}</td></tr>`).join('')}
         </table>
-        <div class="row" style="margin-top:8px">
+        <div class="grid cols-2" style="margin-top:8px">
           <a class="button ghost" href="day.html">View Day/Week/Month cadence</a>
           <a class="button ghost" href="playbook.html">See guardrails</a>
         </div>
       `;
     }
 
-    rail.innerHTML = phases
-      .sort((a,b)=>a.id-b.id)
-      .map(p=>`<button class="tl-node" role="tab" aria-controls="tlPanel" data-id="${p.id}">
-        <strong>Phase ${p.id}</strong><small>${p.title.replace(/^[^-–—]+[–—-]\s*/,'')}</small>
-      </button>`).join('');
+    rail.innerHTML = phases.sort((a,b)=>a.id-b.id).map(p=>`
+      <div class="tl-card" data-id="${p.id}" tabindex="0" role="button" aria-label="Phase ${p.id} ${short(p.title)}">
+        <span class="tl-badge">${p.id<=2?'30 Day':p.id<=4?'60 Day':'90 Day'}</span>
+        <p class="tl-phase">Phase ${p.id}</p>
+        <p class="tl-sub">${short(p.title)}</p>
+      </div>
+    `).join('');
 
     function setActive(id){
-      rail.querySelectorAll('.tl-node').forEach(b=>b.classList.toggle('active', Number(b.dataset.id)===id));
+      rail.querySelectorAll('.tl-card').forEach(x=>x.classList.toggle('active', Number(x.dataset.id)===id));
       renderPanel(id);
     }
     rail.addEventListener('click', e=>{
-      const btn = e.target.closest('.tl-node'); if(!btn) return;
-      setActive(Number(btn.dataset.id));
+      const card = e.target.closest('.tl-card'); if(card) setActive(Number(card.dataset.id));
+    });
+    rail.addEventListener('mouseover', e=>{
+      const card = e.target.closest('.tl-card'); if(card) setActive(Number(card.dataset.id));
+    });
+    rail.addEventListener('keydown', e=>{
+      if(e.key==='Enter' || e.key===' ') {
+        const card = e.target.closest('.tl-card'); if(card) { setActive(Number(card.dataset.id)); e.preventDefault(); }
+      }
     });
 
-    // deep link support: index.html#phase=3
-    const hash = new URL(location.href).hash;
-    const m = hash.match(/phase=(\d)/);
-    setActive(m ? Number(m[1]) : 1);
+    setActive(1);
   })();
 
-  // ===== Solutions + Impact + Exports =====
-  (async function renderSolutions(){
+  // ===== Solutions snapshot + daily chart + exports =====
+  (async function(){
     const {solutions, risks} = await loadAllData();
     const enriched = solutions.map(s=>({ ...s, scores: scoreSolution(s) }));
 
@@ -280,7 +291,7 @@
       return `<div class="soln-card">
         <h4>${s.name}</h4>
         <div class="small">${s.category||'—'}</div>
-        <div class="row" style="margin:8px 0">
+        <div style="display:flex;gap:8px;margin:8px 0">
           <span class="badge ${b.cls}">${s.scores.governance} ${b.label}</span>
           <span class="badge">${s.scores.wsjf} Priority</span>
         </div>
@@ -305,13 +316,13 @@
     };
   })();
 
-  // ===== Cadence Tabs =====
-  (async function cadenceTabs(){
+  // ===== Cadence mini-tabs =====
+  (async function(){
     const {cadence} = await loadAllData();
-    const renderList = (items)=>`<ul class="clean">${(items||[]).map(x=>`<li>${x}</li>`).join('')}</ul>`;
-    document.getElementById('tpDay').innerHTML   = renderList(cadence.daily);
-    document.getElementById('tpWeek').innerHTML  = renderList(cadence.weekly);
-    document.getElementById('tpMonth').innerHTML = renderList(cadence.monthly);
+    const ul = items => `<ul class="clean">${(items||[]).map(x=>`<li>${x}</li>`).join('')}</ul>`;
+    document.getElementById('tpDay').innerHTML   = ul(cadence.daily);
+    document.getElementById('tpWeek').innerHTML  = ul(cadence.weekly);
+    document.getElementById('tpMonth').innerHTML = ul(cadence.monthly);
 
     document.querySelectorAll('.tab').forEach(t=>{
       t.addEventListener('click',()=>{
