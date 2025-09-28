@@ -4,26 +4,33 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Human + AI Strategy | Hub</title>
+
+  <!-- Font + Theme CSS -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="CSS/style.css"/>
+
+  <!-- JS helpers -->
   <script defer src="JS/site.js"></script>
+  <script defer src="JS/ai.js"></script>
 </head>
 <body>
-  <!-- ===== NAV ===== -->
-  <nav>
+  <!-- ================= NAV ================= -->
+  <nav aria-label="Primary">
     <div class="inner">
       <div class="brand">
-        <img src="img/icon.png" alt="logo"/>
+        <img src="img/icon.png" alt="Human + AI logo"/>
         <span>Human + AI Strategy</span>
       </div>
       <div class="navlinks">
-        <a href="index.html">Home</a>
+        <a href="index.html" class="active">Home</a>
         <a href="solutions.html">Solutions</a>
         <a href="governance.html">Governance</a>
+        <a href="playbook.html">Playbook</a>
         <a href="comms.html">Comms</a>
         <a href="pulse.html">Pulse</a>
         <a href="day.html">Day-in-the-Life</a>
         <a href="about.html">About</a>
-        <a href="playbook.html">Playbook</a>
         <a href="star.html">STAR</a>
         <a href="leadership.html">Leadership</a>
         <a href="https://github.com/meobrien22/human-ai-strategy-site" target="_blank" rel="noopener">GitHub</a>
@@ -32,22 +39,311 @@
   </nav>
 
   <div class="container">
-    <!-- ===== HERO ===== -->
+    <!-- ================= HERO ================= -->
     <section class="hero" aria-labelledby="heroTitle">
       <h1 id="heroTitle">Human + AI Strategy Hub</h1>
-      <p>Orchestrating People Tech with responsible AI — bringing policy, ethics, bias, security, and privacy into every phase from strategy to operations.</p>
-
-      <!-- Swap this with your custom art if you have one: img/hero.png -->
+      <p>Operationalizing responsible AI across People Tech—aligning strategy, standards, implementation, and operations with policy, ethics, bias, security, and privacy.</p>
+      <!-- Replace with a nicer illustration if available: img/hero.png -->
       <img class="hero-art" src="img/icon.png" alt="" />
-
       <div class="hero-cta">
         <a class="button" href="leadership.html">Leadership One-Pager</a>
         <a class="button ghost" href="governance.html">Governance Council</a>
         <a class="button ghost" href="solutions.html">Solutions Catalog</a>
       </div>
+      <div class="kpi-band" id="kpiBand" aria-label="Key metrics"></div>
     </section>
 
-    <!-- The rest of the page (timeline, map, etc.) will be added next -->
+    <!-- ================= 30 / 60 / 90 TIMELINE ================= -->
+    <section class="panel" style="margin-top:18px">
+      <h2>30 • 60 • 90 Day Plan</h2>
+      <p class="small">Hover or click a phase to preview deliverables. Data loads from <code>/data/phases.json</code> and <code>/data/phasesActions.json</code>.</p>
+      <div id="tlScroll" class="tl-scroll" aria-label="Phases"></div>
+      <div class="tl-panel">
+        <div id="tlPanel" class="card" role="region" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ================= TWO-COLUMN: MAP + SNAPSHOT ================= -->
+    <section class="grid cols-2" style="margin-top:18px">
+      <!-- Interactive Governance Map -->
+      <div class="svgwrap" role="region" aria-label="Interactive Governance Map">
+        <h2 style="margin:6px 8px 10px">Governance Architecture</h2>
+        <svg viewBox="0 0 1200 820" preserveAspectRatio="xMidYMid meet" role="group" aria-label="Governance Map">
+          <!-- headings -->
+          <text x="70" y="60" class="svg-label">Strategy</text>
+          <text x="370" y="60" class="svg-label">Standards</text>
+          <text x="680" y="60" class="svg-label">Implementation</text>
+          <text x="1010" y="60" class="svg-label">Operations</text>
+
+          <!-- Strategy -->
+          <a xlink:href="leadership.html" tabindex="0" aria-label="C-Suite">
+            <rect class="btn-rect" x="40" y="80" width="240" height="80" rx="12" fill="#6f5bff"/>
+            <text x="60" y="110" class="svg-label">C-Suite</text>
+            <text x="60" y="130" class="svg-sub">Vision • Goals • Risk Appetite</text>
+          </a>
+          <a xlink:href="leadership.html#end-goal" tabindex="0" aria-label="End Goal">
+            <rect class="btn-rect" x="40" y="170" width="240" height="60" rx="12" fill="#7f6dff"/>
+            <text x="60" y="205" class="svg-label">End Goal</text>
+          </a>
+
+          <!-- Standards -->
+          <a xlink:href="playbook.html" tabindex="0" aria-label="Center of Excellence">
+            <rect class="btn-rect" x="340" y="80" width="240" height="80" rx="12" fill="#5a42e0"/>
+            <text x="360" y="110" class="svg-label">Center of Excellence</text>
+            <text x="360" y="130" class="svg-sub">Standards • Frameworks • Best Practices</text>
+          </a>
+          <a xlink:href="playbook.html" tabindex="0" aria-label="Standards">
+            <rect class="btn-rect" x="340" y="170" width="115" height="60" rx="12" fill="#6b52ff"/>
+            <text x="355" y="205" class="svg-label">Standards</text>
+          </a>
+          <a xlink:href="playbook.html" tabindex="0" aria-label="Roadmaps">
+            <rect class="btn-rect" x="465" y="170" width="115" height="60" rx="12" fill="#6b52ff"/>
+            <text x="480" y="205" class="svg-label">Roadmaps</text>
+          </a>
+
+          <!-- Implementation -->
+          <a xlink:href="solutions.html" tabindex="0" aria-label="Business Unit">
+            <rect class="btn-rect" x="650" y="80" width="240" height="80" rx="12" fill="#4b2cd4"/>
+            <text x="670" y="110" class="svg-label">Business Unit</text>
+            <text x="670" y="130" class="svg-sub">Implements strategies • Guardrails</text>
+          </a>
+          <a xlink:href="solutions.html" tabindex="0" aria-label="Data Strategies">
+            <rect class="btn-rect" x="650" y="170" width="115" height="60" rx="12" fill="#5a42e0"/>
+            <text x="665" y="205" class="svg-label">Data Strategies</text>
+          </a>
+          <a xlink:href="playbook.html" tabindex="0" aria-label="Responsible AI">
+            <rect class="btn-rect" x="775" y="170" width="115" height="60" rx="12" fill="#5a42e0"/>
+            <text x="785" y="205" class="svg-label">Responsible AI</text>
+          </a>
+          <a xlink:href="solutions.html" tabindex="0" aria-label="Trusted data">
+            <rect class="btn-rect" x="650" y="240" width="115" height="60" rx="12" fill="#5a42e0"/>
+            <text x="665" y="275" class="svg-label">Trusted data</text>
+          </a>
+          <a xlink:href="solutions.html" tabindex="0" aria-label="Protected data">
+            <rect class="btn-rect" x="775" y="240" width="115" height="60" rx="12" fill="#5a42e0"/>
+            <text x="785" y="275" class="svg-label">Protected data</text>
+          </a>
+
+          <!-- Operations -->
+          <a xlink:href="day.html" tabindex="0" aria-label="Operations BAU">
+            <rect class="btn-rect" x="960" y="80" width="200" height="120" rx="12" fill="#2c355a"/>
+            <text x="980" y="120" class="svg-label">Operations</text>
+            <text x="980" y="140" class="svg-sub">Run / BAU</text>
+          </a>
+
+          <!-- Council band -->
+          <rect x="40" y="340" width="1120" height="120" rx="16" fill="#0e2a6f"/>
+          <text x="60" y="372" class="svg-label" style="font-size:16px">Governance Council</text>
+          <text x="60" y="395" class="svg-sub">Legal • Compliance • Security • Risk • IT</text>
+          <text x="60" y="415" class="svg-sub">Alignment • Conflict resolution • Monitoring</text>
+
+          <a xlink:href="playbook.html" tabindex="0" aria-label="Policy & Standards">
+            <rect class="btn-rect" x="60" y="448" width="210" height="70" rx="12" fill="#193b94"/>
+            <text x="75" y="480" class="svg-label">Policy & Standards</text>
+          </a>
+          <a xlink:href="playbook.html" tabindex="0" aria-label="Model Ethics & Fairness">
+            <rect class="btn-rect" x="290" y="448" width="210" height="70" rx="12" fill="#193b94"/>
+            <text x="305" y="480" class="svg-label">Model Ethics & Fairness</text>
+          </a>
+          <a xlink:href="governance.html" tabindex="0" aria-label="Execution Oversight">
+            <rect class="btn-rect" x="520" y="448" width="210" height="70" rx="12" fill="#193b94"/>
+            <text x="535" y="480" class="svg-label">Execution Oversight</text>
+          </a>
+          <a xlink:href="governance.html" tabindex="0" aria-label="Escalations & Risk Decisions">
+            <rect class="btn-rect" x="750" y="448" width="210" height="70" rx="12" fill="#193b94"/>
+            <text x="765" y="480" class="svg-label">Escalations & Risk Decisions</text>
+          </a>
+          <a xlink:href="pulse.html" tabindex="0" aria-label="Data Hygiene & Quality">
+            <rect class="btn-rect" x="980" y="448" width="160" height="70" rx="12" fill="#193b94"/>
+            <text x="995" y="480" class="svg-label">Data Hygiene & Quality</text>
+          </a>
+
+          <!-- Guardrails band -->
+          <a xlink:href="playbook.html" tabindex="0" aria-label="Responsible AI Guardrails">
+            <rect class="btn-rect" x="40" y="540" width="1120" height="110" rx="16" fill="#2a2f3d"/>
+            <text x="60" y="585" class="svg-label">Responsible AI Guardrails (AI Governance Layer)</text>
+            <text x="60" y="607" class="svg-sub">Ethics • Explainability • Security • PII • Compliance</text>
+          </a>
+
+          <!-- Trusted data band -->
+          <a xlink:href="solutions.html" tabindex="0" aria-label="Trusted Data Foundations">
+            <rect class="btn-rect" x="40" y="660" width="1120" height="120" rx="16" fill="#2c5be6"/>
+            <text x="60" y="705" class="svg-label">Trusted Data Foundations (Data Governance Layer)</text>
+            <text x="60" y="727" class="svg-sub">Quality • Lineage • Metadata • Retention • Legal Holds</text>
+          </a>
+        </svg>
+
+        <div class="legend" style="margin-top:10px">
+          <div class="chip"><span class="swatch" style="background:#6f5bff"></span> Strategy</div>
+          <div class="chip"><span class="swatch" style="background:#5a42e0"></span> Standards</div>
+          <div class="chip"><span class="swatch" style="background:#4b2cd4"></span> Implementation</div>
+          <div class="chip"><span class="swatch" style="background:#2c355a"></span> Operations</div>
+          <div class="chip"><span class="swatch" style="background:#0e2a6f"></span> Governance Council</div>
+          <div class="chip"><span class="swatch" style="background:#2a2f3d"></span> AI Guardrails</div>
+          <div class="chip"><span class="swatch" style="background:#2c5be6"></span> Data Foundations</div>
+        </div>
+      </div>
+
+      <!-- Snapshot: Top Solutions + Daily Impact -->
+      <div class="grid cols-1">
+        <div class="card">
+          <h2>Top 5 Solutions (Governance)</h2>
+          <div id="solnGrid" class="grid cols-2"></div>
+        </div>
+        <div class="card">
+          <h2>Top 3 Daily Impact</h2>
+          <table class="table" id="topDailyTable" aria-label="Top daily impact"></table>
+          <canvas id="impactChart" aria-label="Impact bar chart"></canvas>
+          <div class="row" style="margin-top:10px">
+            <button class="button ghost" id="expJSON">Export JSON</button>
+            <button class="button ghost" id="expCSV">Export CSV</button>
+            <a class="button" href="leadership.html">One-Pager</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CADENCE MINI-TABS ================= -->
+    <section class="panel" style="margin-top:18px">
+      <h2>Day • Week • Month Cadence</h2>
+      <div class="tabbar" role="tablist" aria-label="Cadence tabs">
+        <button class="tab active" data-tab="day"   role="tab" aria-selected="true">Day</button>
+        <button class="tab"         data-tab="week"  role="tab">Week</button>
+        <button class="tab"         data-tab="month" role="tab">Month</button>
+        <a class="button ghost" href="day.html" style="margin-left:auto">Open full schedule</a>
+      </div>
+      <div id="tpDay"   class="card" role="tabpanel"></div>
+      <div id="tpWeek"  class="card" role="tabpanel" style="display:none"></div>
+      <div id="tpMonth" class="card" role="tabpanel" style="display:none"></div>
+    </section>
+
+    <div class="footer">© You — Human + AI Strategist • Portfolio Demo</div>
   </div>
+
+  <!-- ================= PAGE SCRIPTS ================= -->
+  <script>
+  // KPIs
+  (async function(){
+    const {solutions, risks} = await loadAllData();
+    const items = solutions.map(s=>({ ...s, scores: scoreSolution(s) }));
+    const avgGov = Math.round(items.reduce((a,c)=>a+c.scores.governance,0)/Math.max(1,items.length));
+    const avgPriority = Math.round(items.reduce((a,c)=>a+c.scores.wsjf,0)/Math.max(1,items.length));
+    const openRisks = risks.filter(r=>r.status!=='Closed').length;
+    document.getElementById('kpiBand').innerHTML = `
+      <div class="kpi-card"><div class="kpi"><span class="val">${avgGov}</span><span>Avg Governance</span></div><div class="label">Policy • Ethics • Bias • Security • Privacy</div></div>
+      <div class="kpi-card"><div class="kpi"><span class="val">${avgPriority}</span><span>Avg Priority</span></div><div class="label">WSJF-style scoring</div></div>
+      <div class="kpi-card"><div class="kpi"><span class="val">${openRisks}</span><span>Open Risks</span></div><div class="label">Risk register</div></div>
+    `;
+  })();
+
+  // 30/60/90 Timeline
+  (async function(){
+    const {phases, phaseActions} = await loadAllData();
+    const rail = document.getElementById('tlScroll');
+    const panel = document.getElementById('tlPanel');
+    const short = t => t.replace(/^[^-–—]+[–—-]\s*/,''); // drop "Phase X — "
+
+    function renderPanel(id){
+      const p = phases.find(x=>x.id===id);
+      const acts = phaseActions.filter(a=>a.phase===id);
+      panel.innerHTML = `
+        <h3>${p.title}</h3>
+        <p class="small">${p.description}</p>
+        <table class="table">
+          <tr><th>Deliverable</th><th>Owner</th><th>Acceptance</th></tr>
+          ${acts.map(a=>`<tr><td>${a.deliverable}</td><td>${a.owner}</td><td class="small">${a.acceptance}</td></tr>`).join('')}
+        </table>
+        <div class="row" style="margin-top:8px">
+          <a class="button ghost" href="day.html">View cadence</a>
+          <a class="button ghost" href="playbook.html">See guardrails</a>
+        </div>
+      `;
+    }
+
+    rail.innerHTML = phases.sort((a,b)=>a.id-b.id).map(p=>`
+      <div class="tl-card" data-id="${p.id}" tabindex="0" role="button" aria-label="Phase ${p.id} ${short(p.title)}">
+        <span class="tl-badge">${p.id<=2?'30 Day':p.id<=4?'60 Day':'90 Day'}</span>
+        <p class="tl-phase">Phase ${p.id}</p>
+        <p class="tl-sub">${short(p.title)}</p>
+      </div>
+    `).join('');
+
+    function setActive(id){
+      rail.querySelectorAll('.tl-card').forEach(x=>x.classList.toggle('active', Number(x.dataset.id)===id));
+      renderPanel(id);
+    }
+    rail.addEventListener('click', e=>{
+      const card = e.target.closest('.tl-card'); if(card) setActive(Number(card.dataset.id));
+    });
+    rail.addEventListener('mouseover', e=>{
+      const card = e.target.closest('.tl-card'); if(card) setActive(Number(card.dataset.id));
+    });
+    rail.addEventListener('keydown', e=>{
+      if(e.key==='Enter' || e.key===' ') {
+        const card = e.target.closest('.tl-card'); if(card) { setActive(Number(card.dataset.id)); e.preventDefault(); }
+      }
+    });
+    setActive(1);
+  })();
+
+  // Solutions snapshot + chart + exports
+  (async function(){
+    const {solutions, risks} = await loadAllData();
+    const enriched = solutions.map(s=>({ ...s, scores: scoreSolution(s) }));
+
+    const top5 = [...enriched].sort((a,b)=>b.scores.governance - a.scores.governance).slice(0,5);
+    document.getElementById('solnGrid').innerHTML = top5.map(s=>{
+      const b = statusBadge(s.scores.governance);
+      const k = Object.entries(s.kpis||{}).slice(0,2).map(([k,v])=>`<span class="badge">${k}: ${v}</span>`).join(' ');
+      return `<div class="card">
+        <h3 style="margin-bottom:2px">${s.name}</h3>
+        <div class="small">${s.category||'—'}</div>
+        <div class="row" style="margin:8px 0">
+          <span class="badge ${b.cls}">${s.scores.governance} ${b.label}</span>
+          <span class="badge">${s.scores.wsjf} Priority</span>
+        </div>
+        <div class="small">${k || '—'}</div>
+      </div>`;
+    }).join('');
+
+    const topDaily = [...enriched].sort((a,b)=>b.scores.dailyImpact - a.scores.dailyImpact).slice(0,3);
+    document.getElementById('topDailyTable').innerHTML = `
+      <tr><th>Solution</th><th>Daily Impact</th><th>Usage</th><th>Impact</th></tr>
+      ${topDaily.map(s=>`<tr><td><strong>${s.short||s.name}</strong></td><td>${s.scores.dailyImpact}</td><td>${(s.dailyUsage||0).toLocaleString()}</td><td>${s.impact||0}</td></tr>`).join('')}
+    `;
+    // simple bar chart (drawBars provided by JS/site.js)
+    drawBars('impactChart', topDaily.map(x=>x.short||x.name), topDaily.map(x=>x.scores.dailyImpact));
+
+    document.getElementById('expJSON').onclick = ()=>{
+      const snapshot = enriched.map(v=>({name:v.name,category:v.category,status:v.status,priority:v.scores.wsjf,governance:v.scores.governance,dailyImpact:v.scores.dailyImpact,lastUpdated:v.lastUpdated}));
+      __exportUtils.exportJSON('hub_snapshot.json', { snapshot, risks });
+    };
+    document.getElementById('expCSV').onclick = ()=>{
+      const rows = enriched.map(v=>({name:v.name,category:v.category,status:v.status,priority:v.scores.wsjf,governance:v.scores.governance,dailyImpact:v.scores.dailyImpact,dailyUsage:v.dailyUsage||0,impact:v.impact||0,lastUpdated:v.lastUpdated||''}));
+      __exportUtils.exportCSV('hub_snapshot.csv', rows);
+    };
+  })();
+
+  // Cadence mini-tabs
+  (async function(){
+    const {cadence} = await loadAllData();
+    const ul = xs => `<ul style="margin:0;padding-left:18px">${(xs||[]).map(x=>`<li>${x}</li>`).join('')}</ul>`;
+    document.getElementById('tpDay').innerHTML   = ul(cadence.daily);
+    document.getElementById('tpWeek').innerHTML  = ul(cadence.weekly);
+    document.getElementById('tpMonth').innerHTML = ul(cadence.monthly);
+
+    document.querySelectorAll('.tab').forEach(t=>{
+      t.addEventListener('click',()=>{
+        document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+        t.classList.add('active');
+        const id = t.dataset.tab;
+        document.getElementById('tpDay').style.display   = id==='day'?'block':'none';
+        document.getElementById('tpWeek').style.display  = id==='week'?'block':'none';
+        document.getElementById('tpMonth').style.display = id==='month'?'block':'none';
+        t.setAttribute('aria-selected','true');
+      });
+    });
+  })();
+  </script>
 </body>
 </html>
